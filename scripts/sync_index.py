@@ -22,10 +22,8 @@ import html
 import logging
 import re
 
-# Basic logging config to surface messages clearly in workflow logs
 logging.basicConfig(level=logging.INFO)
 
-# Configuration
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 ORG = os.environ.get('ORG_NAME', 'palmshed')
 API_URL = f'https://api.github.com/orgs/{ORG}/repos'
@@ -34,11 +32,6 @@ HEADERS = {'Accept': 'application/vnd.github.v3+json',
 if GITHUB_TOKEN:
     HEADERS['Authorization'] = f'token {GITHUB_TOKEN}'
 
-# Activity thresholds (days)
-ACTIVE_DAYS = int(os.environ.get('ACTIVE_DAYS', '180'))
-LOW_ACTIVITY_DAYS = int(os.environ.get('LOW_ACTIVITY_DAYS', '365'))
-
-# Allowed enums for lightweight validation
 ALLOWED_STATUS = {'active', 'experimental', 'archived', 'seeking-maintainer', 'deprecated', 'unknown'}
 ALLOWED_STAGE = {'prototype', 'experimental', 'beta', 'stable'}
 
@@ -149,26 +142,6 @@ def fetch_all_repos():
     return repos
 
 
-def status_from_pushed_at(repo):
-    """Derive a lightweight activity status from pushed_at and archived flag."""
-    if repo.get('archived'):
-        return 'archived'
-    pushed = repo.get('pushed_at') or repo.get('updated_at') or repo.get('created_at')
-    if not pushed:
-        return 'unknown'
-    try:
-        dt = datetime.fromisoformat(pushed.replace('Z', '+00:00'))
-        now = datetime.now(timezone.utc)
-        days = (now - dt).days
-        if days <= ACTIVE_DAYS:
-            return 'active'
-        if days <= LOW_ACTIVITY_DAYS:
-            return 'low'
-        return 'inactive'
-    except Exception:
-        return 'unknown'
-
-
 def make_li(repo, overrides):
     """Render a single <li> using org overrides first, then GitHub facts as fallback."""
     name = repo.get('name')
@@ -186,27 +159,20 @@ def make_li(repo, overrides):
     desc = html.escape(desc)
     archived = bool(repo.get('archived'))
 
-    status = status_override or status_from_pushed_at(repo)
+    status = status_override or 'unknown'
     status_text = {
         'archived': 'Archived',
         'active': 'Actively maintained',
-        'low': 'Low activity',
-        'inactive': 'Looking for maintainer',
         'experimental': 'Experimental',
         'seeking-maintainer': 'Seeking maintainer',
         'deprecated': 'Deprecated',
-        'unknown': 'Unknown status'
-    }.get(status, str(status))
+        'unknown': None,
+    }.get(status, None)
 
     if maintainers:
         if isinstance(maintainers, str):
             maintainers = [maintainers]
         maintainers = [m for m in maintainers if m]
-
-    if maintainers:
-        maint_html = ', '.join([f'<a href="https://github.com/{html.escape(m)}">{html.escape(m)}</a>' for m in maintainers])
-    else:
-        maint_html = '<span class="no-maintainer">Maintainer not specified</span>'
 
     pushed = repo.get('pushed_at') or repo.get('updated_at') or ''
     pushed_short = pushed.split('T')[0] if pushed else 'unknown'
@@ -220,9 +186,12 @@ def make_li(repo, overrides):
     li += f'<a class="repo-name" href="{url}">{html.escape(name)}</a>'
     li += f'{note}{archived_span}{featured_span}'
     li += '\n          <div class="repo-meta">'
-    li += f'\n            <span class="repo-maintainers">{maint_html}</span>'
+    if maintainers:
+        maint_html = ', '.join([f'<a href="https://github.com/{html.escape(m)}">{html.escape(m)}</a>' for m in maintainers])
+        li += f'\n            <span class="repo-maintainers">{maint_html}</span>'
     li += f'\n            <span class="repo-updated">Last pushed: {pushed_short}</span>'
-    li += f'\n            <span class="repo-status">{status_text}</span>'
+    if status_text:
+        li += f'\n            <span class="repo-status">{status_text}</span>'
     if stage:
         li += f'\n            <span class="repo-stage">Stage: {html.escape(stage)}</span>'
     li += '\n          </div>'
@@ -235,7 +204,7 @@ def main():
     repos = fetch_all_repos()
     repos_sorted = sorted(repos, key=lambda r: r.get('name', '').lower())
     lis = [make_li(r, overrides) for r in repos_sorted]
-    new_list_html = "\n".join(lis) + "\n"
+    new_list_html = '        <ul class="repo-list">\n' + "\n".join(lis) + '\n        </ul>\n'
 
     path = 'index.html'
     if not os.path.exists(path):
@@ -260,7 +229,7 @@ def main():
         logging.error('Could not find repo-list markers %r and %r in index.html; please add them around the <ul class="repo-list"> block.', start_marker, end_marker)
         sys.exit(1)
 
-    today = datetime.utcnow().strftime('%Y-%m-%d')
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
     new_content = re.sub(r'updated \d{4}-\d{2}-\d{2}\.', f'updated {today}.', new_content)
 
     if new_content == content:

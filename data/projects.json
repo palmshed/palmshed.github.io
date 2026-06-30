@@ -1,13 +1,19 @@
 {
-  "cursor": {
-    "maintainers": ["gpucomm-hq"],
-    "status": "active"
-  },
-  "legacy-tool": {
-    "status": "seeking-maintainer"
-  },
-  "prototype": {
-    "status": "experimental",
-    "summary": "Prototype for a small experimental agent"
+  "schema_version": 1,
+  "projects": {
+    "cursor": {
+      "maintainers": ["gpucomm-hq"],
+      "status": "active",
+      "stage": "stable",
+      "featured": true,
+      "summary": "Terminal-first autonomous coding agent"
+    },
+    "legacy-tool": {
+      "status": "seeking-maintainer"
+    },
+    "prototype": {
+      "status": "experimental",
+      "summary": "Prototype for a small experimental agent"
+    }
   }
 }
