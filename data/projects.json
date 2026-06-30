@@ -1,0 +1,13 @@
+{
+  "cursor": {
+    "maintainers": ["gpucomm-hq"],
+    "status": "active"
+  },
+  "legacy-tool": {
+    "status": "seeking-maintainer"
+  },
+  "prototype": {
+    "status": "experimental",
+    "summary": "Prototype for a small experimental agent"
+  }
+}
