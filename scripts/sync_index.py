@@ -22,11 +22,15 @@ import html
 import logging
 import re
 
+# Basic logging config to surface messages clearly in workflow logs
+logging.basicConfig(level=logging.INFO)
+
 # Configuration
 GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN')
 ORG = os.environ.get('ORG_NAME', 'palmshed')
 API_URL = f'https://api.github.com/orgs/{ORG}/repos'
-HEADERS = {'Accept': 'application/vnd.github.v3+json'}
+HEADERS = {'Accept': 'application/vnd.github.v3+json',
+           'User-Agent': 'palmshed-sync-script/1.0 (+https://github.com/palmshed/palmshed.github.io)'}
 if GITHUB_TOKEN:
     HEADERS['Authorization'] = f'token {GITHUB_TOKEN}'
 
@@ -39,6 +43,10 @@ ALLOWED_STATUS = {'active', 'experimental', 'archived', 'seeking-maintainer', 'd
 ALLOWED_STAGE = {'prototype', 'experimental', 'beta', 'stable'}
 
 OVERRIDES_PATH = 'data/projects.json'
+
+# Use a session for connection reuse and consistent headers
+_session = requests.Session()
+_session.headers.update(HEADERS)
 
 
 def load_overrides():
@@ -54,6 +62,7 @@ def load_overrides():
     Returns a dict normalized to lowercase repo name -> metadata dict (may be empty).
     """
     if not os.path.exists(OVERRIDES_PATH):
+        logging.info('%s not found — proceeding with empty overrides', OVERRIDES_PATH)
         return {}
 
     try:
@@ -117,9 +126,18 @@ def fetch_all_repos():
     page = 1
     per_page = 100
     while True:
-        resp = requests.get(API_URL, params={'per_page': per_page, 'page': page, 'type': 'all'}, headers=HEADERS)
+        resp = _session.get(API_URL, params={'per_page': per_page, 'page': page, 'type': 'all'}, timeout=30)
         if resp.status_code != 200:
-            logging.error('Failed to fetch repos: %s %s', resp.status_code, resp.text)
+            # Friendly messages for common failure modes
+            if resp.status_code == 403:
+                remaining = resp.headers.get('X-RateLimit-Remaining')
+                reset = resp.headers.get('X-RateLimit-Reset')
+                if remaining == '0':
+                    logging.error('GitHub API rate limit exceeded (X-RateLimit-Remaining=0). Reset epoch: %s', reset)
+                else:
+                    logging.error('Access forbidden (403). Check that GITHUB_TOKEN has repo and workflow scopes and that the token is valid.')
+            else:
+                logging.error('Failed to fetch repos: %s %s', resp.status_code, resp.text)
             sys.exit(1)
         data = resp.json()
         if not data:
@@ -227,13 +245,20 @@ def main():
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    pattern = re.compile(r'(<ul class="repo-list">)(.*?)(</ul>)', re.DOTALL)
-    if not pattern.search(content):
-        logging.error('Could not find <ul class="repo-list"> in index.html')
-        sys.exit(1)
+    # Prefer explicit markers in index.html for the repo list. This is the contract:
+    #   <!-- repo-list-start -->
+    #   <ul class="repo-list"> ... </ul>
+    #   <!-- repo-list-end -->
+    start_marker = '<!-- repo-list-start -->'
+    end_marker = '<!-- repo-list-end -->'
 
-    replacement = r"\1\n" + new_list_html + r"    \3"
-    new_content = pattern.sub(replacement, content, count=1)
+    if start_marker in content and end_marker in content:
+        before, rest = content.split(start_marker, 1)
+        _, after = rest.split(end_marker, 1)
+        new_content = before + start_marker + "\n" + new_list_html + "    " + end_marker + after
+    else:
+        logging.error('Could not find repo-list markers %r and %r in index.html; please add them around the <ul class="repo-list"> block.', start_marker, end_marker)
+        sys.exit(1)
 
     today = datetime.utcnow().strftime('%Y-%m-%d')
     new_content = re.sub(r'updated \d{4}-\d{2}-\d{2}\.', f'updated {today}.', new_content)
