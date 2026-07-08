@@ -2,15 +2,14 @@
 """
 Sync script (renderer only).
 
-- Reads organization metadata from data/projects.json (compact schema_version=1 + projects map).
-- Fetches GitHub repo facts via the API (description, archived, pushed_at, stars, license, etc.).
-- Combines org metadata (in-memory) with GitHub facts while rendering index.html.
+- Reads project metadata from data/projects.json (map of repo name -> overrides).
+- Fetches GitHub repo facts via the API (description, archived, pushed_at, etc.).
+- Combines overrides with GitHub facts and renders the repo list into index.html.
 
-Design constraints enforced here:
-- No contributor inference or per-repo contributor API calls.
+Design constraints:
 - data/projects.json is the single source of org-owned metadata.
-- Lightweight validation: fail only on malformed JSON, invalid enum values, or incorrect field types.
-- No merged artifacts are written; only index.html may be updated.
+- Lightweight validation: fail only on malformed JSON or invalid field types.
+- Only index.html may be modified.
 """
 
 import os
@@ -43,19 +42,15 @@ _session.headers.update(HEADERS)
 
 
 def load_overrides():
-    """Load and lightly validate data/projects.json.
+    """Load and validate data/projects.json.
 
-    Expected shape:
-      {
-        "schema_version": 1,
-        "projects": { "repo-name": { ... } }
-      }
+    Expected shape: { "repo-name": { "status": ..., "stage": ..., ... } }
 
-    Validates types and enum values. Exits with non-zero on malformed JSON or invalid types/enum.
+    Validates types and enum values. Exits with non-zero on malformed JSON or invalid types.
     Returns a dict normalized to lowercase repo name -> metadata dict (may be empty).
     """
     if not os.path.exists(OVERRIDES_PATH):
-        logging.info('%s not found — proceeding with empty overrides', OVERRIDES_PATH)
+        logging.info('%s not found -- proceeding with empty overrides', OVERRIDES_PATH)
         return {}
 
     try:
@@ -69,21 +64,8 @@ def load_overrides():
         logging.error('%s must be a JSON object at top level', OVERRIDES_PATH)
         sys.exit(1)
 
-    schema_version = data.get('schema_version')
-    if schema_version is None:
-        logging.error('%s must include "schema_version": 1', OVERRIDES_PATH)
-        sys.exit(1)
-    if not isinstance(schema_version, int) or schema_version != 1:
-        logging.error('%s: unsupported schema_version %r (expected integer 1)', OVERRIDES_PATH, schema_version)
-        sys.exit(1)
-
-    projects = data.get('projects')
-    if not isinstance(projects, dict):
-        logging.error('%s: "projects" object is required and must be a map', OVERRIDES_PATH)
-        sys.exit(1)
-
     # Validate entries
-    for repo, meta in projects.items():
+    for repo, meta in data.items():
         if not isinstance(meta, dict):
             logging.error('Project entry %r must be an object', repo)
             sys.exit(1)
@@ -95,9 +77,9 @@ def load_overrides():
         if stage is not None and stage not in ALLOWED_STAGE:
             logging.error('Invalid stage for %s: %r. Allowed: %s', repo, stage, sorted(ALLOWED_STAGE))
             sys.exit(1)
-        maintainers = meta.get('maintainers') or meta.get('maintainer')
-        if maintainers is not None and not (isinstance(maintainers, list) or isinstance(maintainers, str)):
-            logging.error('maintainers for %s must be a string or list of strings', repo)
+        maintainers = meta.get('maintainers')
+        if maintainers is not None and not isinstance(maintainers, list):
+            logging.error('maintainers for %s must be a list of strings', repo)
             sys.exit(1)
         featured = meta.get('featured')
         if featured is not None and not isinstance(featured, bool):
@@ -109,7 +91,7 @@ def load_overrides():
             sys.exit(1)
 
     # Normalize keys to lowercase for case-insensitive lookup
-    normalized = {k.lower(): v for k, v in projects.items()}
+    normalized = {k.lower(): v for k, v in data.items()}
     return normalized
 
 
@@ -150,7 +132,7 @@ def make_li(repo, overrides):
     meta = overrides.get(name.lower(), {}) if overrides else {}
     # Org-owned summary preferred; else use GitHub description
     summary = meta.get('summary') or repo.get('description') or ''
-    maintainers = meta.get('maintainers') or meta.get('maintainer')
+    maintainers = meta.get('maintainers')
     status_override = meta.get('status')
     stage = meta.get('stage')
     featured = meta.get('featured')
@@ -170,8 +152,6 @@ def make_li(repo, overrides):
     }.get(status, None)
 
     if maintainers:
-        if isinstance(maintainers, str):
-            maintainers = [maintainers]
         maintainers = [m for m in maintainers if m]
 
     pushed = repo.get('pushed_at') or repo.get('updated_at') or ''
