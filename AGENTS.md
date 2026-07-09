@@ -19,3 +19,18 @@
 # Interaction principle
 
 Before adding a hover or popover interaction, ask whether the information needs to be hidden in the first place. If the page works as a static, predictable document, prefer always-visible text or a native `<details>` disclosure. Only introduce a hover pattern if the same interaction is likely to be reused across multiple locations on the page.
+
+If adding context to static elements (e.g. metrics), prefer:
+
+- Tooltip on hover (quiet, no layout shift)
+- Native `<details>` disclosure matching the Repository Archive pattern
+- Small always-visible secondary line of text
+
+Avoid on this page:
+
+- Sliding panels, drawers, popover modals
+- Horizontal carousels
+- Animated cards or shift-on-hover content
+- Interaction patterns that don't exist anywhere else on the page
+
+If the page has succeeded by being static and predictable, introducing a single interactive element makes that one part behave differently from the rest of the site. That should be the exception, not the default.
