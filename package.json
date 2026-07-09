@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "lint": "html-validate index.html"
+  },
+  "devDependencies": {
+    "html-validate": "^8.0.0"
+  }
+}

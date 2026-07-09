@@ -162,18 +162,18 @@ def make_li(repo, overrides):
 
     featured_span = '<span class="featured">featured</span>' if featured else ''
 
-    li = f'        <li data-status="{html.escape(str(status))}" class="repo-item{" archived" if archived else ""}>'
+    li = f'        <li{" archived" if archived else ""}>'
     li += f'<a class="repo-name" href="{url}">{html.escape(name)}</a>'
     li += f'{note}{archived_span}{featured_span}'
     li += '\n          <div class="repo-meta">'
     if maintainers:
         maint_html = ', '.join([f'<a href="https://github.com/{html.escape(m)}">{html.escape(m)}</a>' for m in maintainers])
-        li += f'\n            <span class="repo-maintainers">{maint_html}</span>'
-    li += f'\n            <span class="repo-updated">Last pushed: {pushed_short}</span>'
+        li += f'\n            <span>{maint_html}</span>'
+    li += f'\n            <span>Last pushed: {pushed_short}</span>'
     if status_text:
         li += f'\n            <span class="repo-status">{status_text}</span>'
     if stage:
-        li += f'\n            <span class="repo-stage">Stage: {html.escape(stage)}</span>'
+        li += f'\n            <span>Stage: {html.escape(stage)}</span>'
     li += '\n          </div>'
     li += '</li>'
     return li
@@ -210,7 +210,7 @@ def main():
         sys.exit(1)
 
     today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
-    new_content = re.sub(r'updated \d{4}-\d{2}-\d{2}\.', f'updated {today}.', new_content)
+    new_content = re.sub(r'(Last updated<\/dt><dd>)\d{4}-\d{2}-\d{2}', rf'\1{today}', new_content)
 
     if new_content == content:
         print('No changes needed')
