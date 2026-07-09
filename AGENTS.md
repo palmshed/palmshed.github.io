@@ -15,3 +15,7 @@
 - Let the content speak for itself. If something feels like it is trying to attract attention, simplify or remove it.
 - Announcement bar: if there is nothing important to announce, remove it. If it stays, one short sentence, no exclamation marks, no marketing phrasing.
 - This is an open source engineering organization site. Write with the understated tone of LLVM, Rust, or OpenBSD. State what something is without trying to persuade.
+
+# Interaction principle
+
+Before adding a hover or popover interaction, ask whether the information needs to be hidden in the first place. If the page works as a static, predictable document, prefer always-visible text or a native `<details>` disclosure. Only introduce a hover pattern if the same interaction is likely to be reused across multiple locations on the page.
