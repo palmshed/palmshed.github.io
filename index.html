@@ -376,6 +376,65 @@
       text-decoration: underline;
     }
 
+    /* ---------- Terminal Demo ---------- */
+
+    .terminal {
+      grid-column: 1 / -1;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      position: relative;
+    }
+
+    .terminal::before {
+      content: "⊕ cursor";
+      display: block;
+      font-family: inherit;
+      font-size: 0.75rem;
+      color: #8b949e;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .terminal .line {
+      min-height: 1.6em;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .terminal .prompt {
+      color: #3fb950;
+    }
+
+    .terminal .dim {
+      color: #8b949e;
+    }
+
+    .terminal .cursor {
+      display: inline-block;
+      width: 0.5em;
+      height: 1.1em;
+      background: #e6edf3;
+      vertical-align: text-bottom;
+      margin-left: 0.15em;
+      animation: blink 1s step-end infinite;
+    }
+
+    .terminal .cursor.done {
+      animation: none;
+      background: transparent;
+    }
+
+    @keyframes blink {
+      50% { background: transparent; }
+    }
+
     @media (max-width: 640px) {
       .featured-grid {
         grid-template-columns: 1fr;
@@ -784,6 +843,20 @@
           <div class="card-meta">
             <span>Last pushed: 2026-07-04</span>
           </div>
+        </div>
+      </div>
+      <div class="terminal" data-animate>
+        <div class="line"><span class="prompt">$</span> cursor explain this project</div>
+        <div class="line dim">Investigating repository...</div>
+        <div class="line dim">✓ Ready to explain</div>
+        <div class="line"><br></div>
+        <div class="line">This project is a terminal-native AI coding agent.</div>
+        <div class="line">Work with codebases, files, repositories, and shell</div>
+        <div class="line">commands through a conversation-first interface.</div>
+        <div class="line"><br></div>
+        <div class="line">
+          <span class="prompt">$</span>
+          <span id="term-cursor"><span class="cursor"></span></span>
         </div>
       </div>
     </section>
