@@ -252,113 +252,234 @@
     .cap-grid li {
       font-size: 0.9375rem;
       margin-bottom: 0.25rem;
+      position: relative;
     }
 
-    /* Archive details */
-    .archive-toggle {
-      border: 0;
-      padding: 0;
+    .cap-preview {
+      display: none;
+      position: absolute;
+      z-index: 50;
+      top: 1.5rem;
+      left: 0;
+      width: 260px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      pointer-events: none;
     }
 
-    .archive-toggle summary {
-      cursor: pointer;
-      font-size: 0.9375rem;
-      font-weight: 500;
+    .cap-grid li a:hover + .cap-preview {
+      display: block;
+    }
+
+    /* Preview: cursor terminal */
+    .cap-preview .cursor-term {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      line-height: 1.65;
+    }
+    .cap-preview .term-line { margin-bottom: 0.25rem; }
+    .cap-preview .term-line:last-child { margin-bottom: 0; }
+    .cap-preview .term-badge { color: var(--accent); margin-right: 0.25rem; }
+    .cap-preview .term-header { color: var(--text-secondary); font-weight: 500; }
+    .cap-preview .term-status { color: var(--accent); font-size: 0.625rem; }
+    .cap-preview .term-prompt { color: var(--text-secondary); }
+    .cap-preview .term-response { color: var(--accent); }
+    .cap-preview .term-body { color: var(--text); }
+
+    /* Preview: alma composer */
+    .cap-preview .alma-app {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .cap-preview .composer-input-row {
+      display: flex; align-items: flex-start; gap: 6px;
+      padding: 8px 12px 2px;
+    }
+    .cap-preview .composer-btn {
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none;
+      color: var(--text-secondary); padding: 4px; border-radius: 8px;
+    }
+    .cap-preview .composer-btn svg { width: 14px; height: 14px; }
+    .cap-preview .composer-textarea {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-family: var(--font);
+      font-size: 0.75rem; line-height: 1.5; resize: none;
+      min-height: 20px; padding: 6px 0; font-weight: 400;
+    }
+    .cap-preview .composer-textarea::placeholder { color: var(--text-secondary); opacity: 0.5; }
+    .cap-preview .composer-actions { display: flex; align-items: center; gap: 4px; padding-top: 4px; flex-shrink: 0; }
+    .cap-preview .composer-btn--send { color: var(--accent); }
+    .cap-preview .composer-btn--send svg { width: 16px; height: 16px; }
+    .cap-preview .composer-toolbar {
+      display: flex; align-items: center;
+      padding: 0 12px 6px; gap: 0;
+    }
+    .cap-preview .model-menu-trigger {
+      display: flex; align-items: center; gap: 2px;
+      background: transparent; border: none;
+      color: var(--text-secondary); padding: 2px 4px; border-radius: 8px;
+      font-family: var(--font); font-size: 0.5625rem; opacity: 0.55;
+    }
+    .cap-preview .model-menu-trigger svg { width: 10px; height: 10px; }
+    .cap-preview .mode-menu {
+      display: flex; align-items: center;
+      margin-left: 8px; padding-left: 8px;
+      position: relative;
+    }
+    .cap-preview .mode-menu::before {
+      content: ""; position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 1px; height: 8px; background: var(--border);
+    }
+    .cap-preview .mode-menu-trigger {
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none;
+      color: var(--text-secondary); padding: 2px; border-radius: 8px; opacity: 0.55;
+    }
+    .cap-preview .mode-menu-trigger svg { width: 13px; height: 13px; }
+
+    /* Preview: nuntius PR review */
+    .cap-preview .review-entry {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .cap-preview .review-mark {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cap-preview .review-mark svg { width: 14px; height: 14px; }
+    .cap-preview .review-entry-top {
+      display: flex; gap: 0.5rem; align-items: flex-start;
+      padding: 0.5rem;
+    }
+    .cap-preview .review-meta {
+      font-size: 0.625rem; color: var(--text-secondary); line-height: 1.4;
+    }
+    .cap-preview .review-meta strong { color: var(--text); font-weight: 500; }
+    .cap-preview .review-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden;
+      font-size: 0.625rem;
+    }
+    .cap-preview .review-block-hd {
+      display: flex; align-items: center; gap: 0.25rem;
+      padding: 0.25rem 0.5rem; font-weight: 500;
+      background: var(--code-bg); border-bottom: 1px solid var(--border);
+    }
+    .cap-preview .review-block-hd svg { width: 12px; height: 12px; color: var(--text-secondary); }
+    .cap-preview .review-block-bd { padding: 0.375rem; }
+    .cap-preview .review-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.5625rem; line-height: 1.4;
+    }
+    .cap-preview .review-table th {
+      text-align: left; font-weight: 500; color: var(--text);
+      padding: 0.1875rem 0.25rem; border-bottom: 1px solid var(--border);
+    }
+    .cap-preview .review-table td {
+      padding: 0.1875rem 0.25rem; border-bottom: 1px solid var(--border);
       color: var(--text-secondary);
-      user-select: none;
-      padding: 0.25rem 0;
     }
-
-    .archive-toggle summary:hover {
-      color: var(--accent);
+    .cap-preview .review-table td:first-child { font-family: var(--mono); }
+    .cap-preview .review-diff {
+      border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-top: 0.375rem;
     }
-
-    .archive-toggle[open] summary {
-      color: var(--text);
+    .cap-preview .review-diff-hd {
+      padding: 0.1875rem 0.5rem; font-family: var(--mono); font-size: 0.5625rem;
+      color: var(--text-secondary); background: var(--code-bg);
+      border-bottom: 1px solid var(--border);
     }
-
-    /* Repo list */
-    .repo-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-      margin: 1rem 0 0;
-      padding: 0;
-      list-style: none;
+    .cap-preview .review-diff-bd {
+      padding: 0.25rem 0.5rem; font-family: var(--mono); font-size: 0.5625rem;
+      line-height: 1.5;
     }
+    .cap-preview .review-diff-bd .dl { display: block; white-space: pre; }
+    .cap-preview .review-diff-bd .dh { display: inline-block; width: 1rem; text-align: right; margin-right: 0.5rem; color: var(--text-secondary); }
+    .cap-preview .review-diff-bd .dd { color: #1a7f37; background: #dafbe1; }
+    .cap-preview .review-diff-bd .dr { color: #cf222e; background: #ffebe9; }
 
-    .repo-list li {
-      display: grid;
-      gap: 0.1rem;
-      padding: 0.6rem 0;
+    /* Preview: via browser */
+    .cap-preview .via-browser {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .cap-preview .via-dots {
+      display: flex; gap: 0.1875rem; padding: 0.25rem 0.375rem;
+    }
+    .cap-preview .via-dot {
+      width: 0.375rem; height: 0.375rem; border-radius: 50%;
+    }
+    .cap-preview .via-dot.red { background: #fe5f57; }
+    .cap-preview .via-dot.yellow { background: #febc2e; }
+    .cap-preview .via-dot.green { background: #28c840; }
+    .cap-preview .via-tab-strip {
+      display: flex; padding: 0 0.25rem; background: var(--surface);
       border-top: 1px solid var(--border);
     }
-
-    .repo-list li:nth-child(2) {
-      border-top: 0;
+    .cap-preview .via-tab-strip-item {
+      display: flex; align-items: center; gap: 0.25rem;
+      padding: 0.125rem 0.375rem; font-size: 0.5rem; font-family: var(--font);
+      color: var(--text-secondary); border-bottom: 1.5px solid transparent;
+      white-space: nowrap;
     }
-
-    .repo-list li:first-child {
-      border-top: 0;
+    .cap-preview .via-tab-strip-item.active { color: var(--text); border-bottom-color: var(--accent); }
+    .cap-preview .via-tab-strip-item svg { width: 10px; height: 10px; }
+    .cap-preview .via-toolbar {
+      display: flex; align-items: center; gap: 0.25rem;
+      padding: 0.1875rem 0.375rem; background: var(--surface);
+      border-top: 1px solid var(--border);
     }
-
-    .repo-name {
-      font-weight: 500;
-      font-size: 0.9375rem;
+    .cap-preview .via-nav-pill {
+      display: flex; align-items: center;
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.0625rem;
     }
-
-    .repo-list a {
-      text-decoration: none;
+    .cap-preview .via-nav-pill button {
+      width: 1rem; height: 1rem; border: 0; background: none; border-radius: 4px;
+      font-size: 0.4375rem; color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .repo-list a:hover {
-      text-decoration: underline;
+    .cap-preview .via-toolbar-icon {
+      width: 1rem; height: 1rem; border: 0; background: none; border-radius: 4px;
+      font-size: 0.5rem; color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .repo-note {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
+    .cap-preview .via-addr-pill {
+      flex: 1; display: flex; align-items: center; gap: 0.125rem;
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 0.125rem 0.375rem; background: var(--bg);
     }
-
-    .repo-meta {
-      font-size: 0.8125rem;
-      color: var(--text-secondary);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.25rem 0.75rem;
+    .cap-preview .addr-icon { font-size: 0.5rem; color: var(--text-secondary); opacity: 0.6; }
+    .cap-preview .addr-url {
+      flex: 1; font-size: 0.5rem; color: var(--text); font-family: var(--font);
+      border: 0; outline: none; background: none;
     }
-
-    .repo-meta a {
-      color: var(--text-secondary);
+    .cap-preview .addr-action {
+      width: 0.875rem; height: 0.875rem; border: 0; background: none; border-radius: 3px;
+      font-size: 0.5rem; color: var(--text-secondary);
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .repo-status {
-      color: var(--accent);
+    .cap-preview .via-content {
+      padding: 0.375rem; text-align: center; font-size: 0.5rem;
+      color: var(--text-secondary); line-height: 1.4;
     }
+    .cap-preview .via-content svg { width: 0.75rem; height: 0.75rem; opacity: 0.4; }
+    .cap-preview .via-page-title { font-size: 0.5625rem; font-weight: 500; color: var(--text-secondary); }
 
-    .featured {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--accent);
-      margin-left: 0.35rem;
-    }
 
-    .archived {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-left: 0.35rem;
-    }
-
-    /* Feedback */
-    .feedback {
-      font-size: 0.8125rem;
-      margin-top: 2.5rem;
-    }
-
-    .feedback a {
-      color: inherit;
-    }
 
     /* Footer */
     footer {
@@ -471,13 +592,7 @@
         gap: 2rem;
       }
 
-      .repo-list {
-        grid-template-columns: 1fr;
-      }
-
-      .repo-list li:nth-child(2) {
-        border-top: 1px solid var(--border);
-      }
+      .cap-preview { display: none !important; }
 
       footer {
         padding: 1.5rem 1rem 2rem;
@@ -537,7 +652,7 @@
       <li><a href="./projects.html">Projects</a></li>
       <li><a href="./cursor.html">Cursor</a></li>
       <li><a href="./docs.html">Docs</a></li>
-    </ul>
+      </ul>
     <button type="button" class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">Menu</button>
   </nav>
 
@@ -556,8 +671,8 @@
       <h1>Open source engineering studio</h1>
       <p>Palmshed builds native applications, developer tools, AI systems, libraries, and infrastructure.</p>
       <div class="hero-actions">
-        <a href="https://github.com/palmshed">GitHub</a>
-        <a href="./projects.html">Projects</a>
+        <a href="./principles.html">Principles</a>
+        <a href="https://palmshed.github.io/cursor/invite.html">Career</a>
       </div>
     </div>
   </div>
@@ -569,503 +684,132 @@
         <div>
           <h3>AI &amp; Agents</h3>
           <ul>
-            <li><a href="./cursor.html">cursor</a></li>
-            <li><a href="./nuntius.html">nuntius</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Systems</h3>
-          <ul>
-            <li><a href="./kernels.html">kernels</a></li>
-            <li><a href="./barepi.html">barepi</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Developer Tools</h3>
-          <ul>
-            <li><a href="./markdownpro.html">markdownpro</a></li>
-            <li><a href="./dotfiles.html">dotfiles</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Infrastructure</h3>
-          <ul>
-            <li><a href="./rag.html">rag</a></li>
+            <li>
+              <a href="./cursor.html">cursor</a>
+              <div class="cap-preview">
+                <div class="cursor-term">
+                  <div class="term-line term-header"><span class="term-badge">▌</span> CURSOR</div>
+                  <div class="term-line term-status">offline &middot; qwen2.5-coder:1.5b</div>
+                  <div class="term-line term-prompt">&gt; explain this project</div>
+                  <div class="term-line term-response">cursor</div>
+                  <div class="term-line term-body">This project is a terminal-native AI coding agent.</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="./nuntius.html">nuntius</a>
+              <div class="cap-preview">
+                <div class="review-entry">
+                  <div class="review-entry-top">
+                    <div class="review-mark">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+                    </div>
+                    <div>
+                      <div class="review-meta"><strong>nuntius-review</strong> &middot; <a href="#">b70cbd1</a></div>
+                      <div class="review-block">
+                        <div class="review-block-hd">
+                          <svg viewBox="0 0 16 16" fill="currentColor"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/></svg>
+                          Nuntius
+                        </div>
+                        <div class="review-block-bd">
+                          <table class="review-table">
+                            <thead><tr><th scope="col">Commit</th><th scope="col">Summary</th></tr></thead>
+                            <tbody><tr><td>b70cbd1</td><td>Fix doc title, base typography</td></tr></tbody>
+                          </table>
+                          <div class="review-diff">
+                            <div class="review-diff-hd">backend/static_app.py</div>
+                            <div class="review-diff-bd">
+                              <span class="dl dr"><span class="dh">-</span> PAGES_DIR = REPO_DIR / "deploy"</span>
+                              <span class="dl dd"><span class="dh">+</span> PAGES_DIR = str(REPO_DIR / "deploy")</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
         <div>
           <h3>Applications</h3>
           <ul>
-            <li><a href="./alma.html">alma</a></li>
-            <li><a href="./via.html">via</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>SDKs &amp; APIs</h3>
-          <ul>
-            <li><a href="./appsdk.html">appsdk</a></li>
+            <li>
+              <a href="./alma.html">alma</a>
+              <div class="cap-preview">
+                <div class="alma-app">
+                  <div class="composer">
+                    <div class="composer-input-row">
+                      <div class="composer-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                      </div>
+                      <textarea class="composer-textarea" placeholder="Ask anything..." rows="1"></textarea>
+                      <div class="composer-actions">
+                        <div class="composer-btn composer-btn--send">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="composer-toolbar">
+                      <div class="model-menu">
+                        <div class="model-menu-trigger">
+                          <span>Auto</span>
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </div>
+                      </div>
+                      <div class="mode-menu">
+                        <div class="mode-menu-trigger">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l10 5-10 5L2 7Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="./via.html">via</a>
+              <div class="cap-preview">
+                <div class="via-browser">
+                  <div class="via-dots">
+                    <span class="via-dot red"></span>
+                    <span class="via-dot yellow"></span>
+                    <span class="via-dot green"></span>
+                  </div>
+                  <div class="via-tab-strip">
+                    <div class="via-tab-strip-item active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+                      palmshed
+                    </div>
+                    <div class="via-tab-strip-item">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                      GitHub
+                    </div>
+                  </div>
+                  <div class="via-toolbar">
+                    <div class="via-addr-pill">
+                      <span class="addr-icon">&#128269;</span>
+                      <span class="addr-url">palmshed.github.io</span>
+                      <span class="addr-action">&#8635;</span>
+                    </div>
+                    <div class="via-nav-pill">
+                      <button type="button" tabindex="-1">&#8592;</button>
+                      <button type="button" tabindex="-1">&#8594;</button>
+                    </div>
+                    <span class="via-toolbar-icon">+</span>
+                    <span class="via-toolbar-icon">&#8942;</span>
+                  </div>
+                  <div class="via-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#1f883d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+                    <div class="via-page-title">palmshed</div>
+                  </div>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
-    </section>
-
-    <section>
-      <h2>Projects</h2>
-      <!-- Everything above this line is hand-maintained. The repository list below
-           is generated by scripts/sync_index.py from GitHub API data. -->
-      <details class="archive-toggle">
-      <summary>All repositories (85+)</summary>
-<!-- ==========================================================================
-     Repository list (generated between markers)
-     ========================================================================== -->
-<!-- repo-list-start -->
-        <ul class="repo-list">
-        <li><a class="repo-name" href="https://github.com/palmshed/.github">.github</a><span class="repo-note">Org profile.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-26</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/ai">ai</a><span class="repo-note">AI notes.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-06</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/alma">alma</a><span class="repo-note">Multimodal AI platform.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-10</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/and">and</a><span class="repo-note">Short notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-11</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/applekernel">applekernel</a><span class="repo-note">Apple silicon kernel notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/appsdk">appsdk</a><span class="repo-note">GitHub App framework.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/barepi">barepi</a><span class="repo-note">Raspberry Pi notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-25</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/benchmark">benchmark</a><span class="repo-note">Speech benchmark.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-06</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/bible">bible</a><span class="repo-note">Bible notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-18</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/bin">bin</a><span class="repo-note">Elixir pipeline.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-03-07</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/bitinfer">bitinfer</a><span class="repo-note">Inference framework.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/bniladridas">bniladridas</a><span class="repo-note">Profile resources.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-18</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/brew">brew</a><span class="repo-note">Firmware baseline.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-25</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/browser">browser</a><span class="repo-note">Flutter browser app.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-25</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/browser-archive">browser-archive</a><span class="repo-note">Archived browser app.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-04</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/buildanywhere">buildanywhere</a><span class="repo-note">CI pipeline.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-12-27</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/calculator">calculator</a><span class="repo-note">GTK calculator.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-04-02</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/clabot">clabot</a><span class="repo-note">CLA workflow.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-15</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/claudesdk">claudesdk</a><span class="repo-note">Claude agent SDK.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-01</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/cli">cli</a><span class="repo-note">CLI tools.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-09</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/clicompare">clicompare</a><span class="repo-note">CLI comparison notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-08</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/commitfix">commitfix</a><span class="repo-note">Commit message test.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-29</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/course">course</a><span class="repo-note">Mac process orchestrator.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/cursor">cursor</a><span class="repo-note">Autonomous coding agent</span><span class="featured">featured</span>
-          <div class="repo-meta">
-            <span><a href="https://github.com/bniladridas">bniladridas</a></span>
-            <span>Last pushed: 2026-07-11</span>
-            <span class="repo-status">Actively maintained</span>
-            <span>Stage: stable</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/cursor-docs">cursor-docs</a><span class="repo-note">Cursor documentation website.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-28</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/darwinxnu">darwinxnu</a><span class="repo-note">Darwin kernel mirror.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-11-21</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/dot">dot</a><span class="repo-note">Dotnet notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-29</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/dotfiles">dotfiles</a><span class="repo-note">Dotfiles toolkit.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/fix">fix</a><span class="repo-note">Commit message app.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-04-10</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/forkcheck">forkcheck</a><span class="repo-note">Fork testing.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/geminicli">geminicli</a><span class="repo-note">Gemini terminal agent.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/glimpse">glimpse</a><span class="repo-note">Logo symbols.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-13</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/gon">gon</a><span class="repo-note">Dependabot review action.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/gradledemo">gradledemo</a><span class="repo-note">Java HTTP demo.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-12-28</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/harper">harper</a><span class="repo-note">Harper notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-04</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/harperbot">harperbot</a><span class="repo-note">GitHub App bot.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-16</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/harpertoken">harpertoken</a><span class="repo-note">Fine tuning notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-11-08</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/hautofix">hautofix</a><span class="repo-note">Code repair tool.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-09</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/hbadges">hbadges</a><span class="repo-note">Badge assets.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/hbotest">hbotest</a><span class="repo-note">Webhook test.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-03-17</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/hello">hello</a><span class="repo-note">React app.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-08</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/hi">hi</a><span class="repo-note">Instrument hub.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-26</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/homebrew-cursor">homebrew-cursor</a><span class="repo-note">Homebrew tap for Cursor.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-29</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/hub">hub</a><span class="repo-note">Collaboration app.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-08</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/hwhcore">hwhcore</a><span class="repo-note">Constraint core.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/iter">iter</a><span class="repo-note">Autonomous coding agent written in Rust.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-30</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/jupyterml">jupyterml</a><span class="repo-note">Notebook ML agent.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-10</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/kernelgo">kernelgo</a><span class="repo-note">Kernel info CLI.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-08</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/kerneljs">kerneljs</a><span class="repo-note">Kernel version CLI.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-08</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/kernels">kernels</a><span class="repo-note">Swift GPU kernels.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-02</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/kernelswift">kernelswift</a><span class="repo-note">Kernel info CLI.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/l2">l2</a><span class="repo-note">Layer 2 notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-01</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/latexgen">latexgen</a><span class="repo-note">LaTeX generator.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-08</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/lifeboat">lifeboat</a><span class="repo-note">Kaggle dataset notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-07</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/lilt">lilt</a><span class="repo-note">Android messenger.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-27</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/linea">linea</a><span class="repo-note">Local-first AI assistant.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-04</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/llamavision">llamavision</a><span class="repo-note">Vision demo.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/llamaware">llamaware</a><span class="repo-note">C++ code assistant.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-13</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/loom">loom</a><span class="repo-note">CI notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/macoskernel">macoskernel</a><span class="repo-note">XNU build notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/manager">manager</a><span class="repo-note">Recipe runner.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-25</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/markdownpro">markdownpro</a><span class="repo-note">Markdown workflow app.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/mcporg">mcporg</a><span class="repo-note">GitHub org mapping.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-25</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/md">md</a><span class="repo-note">Markdown formatting.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-03-02</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/memoraxx">memoraxx</a><span class="repo-note">Llama terminal client.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-11-07</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/metal">metal</a><span class="repo-note">Swift package notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-02</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/mistralvibe">mistralvibe</a><span class="repo-note">Mistral CLI agent.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-12-11</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/ml">ml</a><span class="repo-note">Machine learning framework.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-11</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/mlapi">mlapi</a><span class="repo-note">Machine learning API.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-05</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/mlsharp">mlsharp</a><span class="repo-note">Monocular view synthesis.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-12-17</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/mlxlm">mlxlm</a><span class="repo-note">M1 inference tests.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-20</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/mnistcnn">mnistcnn</a><span class="repo-note">Digit classifier.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-11-03</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/models">models</a><span class="repo-note">Model notes.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-10-30</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/molplatform">molplatform</a><span class="repo-note">Computer science service.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-17</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/momentum">momentum</a><span class="repo-note">Motion optimization library.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-09-17</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/nuntius">nuntius</a><span class="repo-note">Ruby toolkit for language models.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-10</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/omnitype">omnitype</a><span class="repo-note">Type checker.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-11-05</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/organictyping">organictyping</a><span class="repo-note">Keystroke dynamics analyzer.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-07</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/palmshed">palmshed</a><span class="repo-note">Staff engineer</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-02</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/palmshed.github.io">palmshed.github.io</a><span class="repo-note">Public org page.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-11</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/patchcore">patchcore</a><span class="repo-note">Anomaly detection model.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-10</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/path">path</a><span class="repo-note">Navigation notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-04-13</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/pathutils">pathutils</a><span class="repo-note">Path utilities.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-28</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/prtemplate">prtemplate</a><span class="repo-note">Pull request template.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-19</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/rag">rag</a><span class="repo-note">Containerized Python package.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-02</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/resume">resume</a><span class="repo-note">Resume builder.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-13</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/rl">rl</a><span class="repo-note">Reinforcement learning framework.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/sandbox">sandbox</a><span class="repo-note">Sandbox repo.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-06</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/scout">scout</a><span class="repo-note">Storage tool.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-15</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/servers">servers</a><span class="repo-note">MCP servers.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-27</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/simengine">simengine</a><span class="repo-note">Physics simulation engine.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-12</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/stillness">stillness</a><span class="repo-note">Minimal page theme.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-31</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/stremiodiag">stremiodiag</a><span class="repo-note">Stremio signing diagnostics.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-20</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/surface">surface</a><span class="repo-note">GitHub surface audit.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/theme">theme</a><span class="repo-note">Minimal theme.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-01-30</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/thread">thread</a><span class="repo-note">Systems compute.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-26</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/tokensdk">tokensdk</a><span class="repo-note">Harpertoken SDK.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-12-20</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/tracking">tracking</a><span class="repo-note">Activity workflow.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-18</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/tts">tts</a><span class="repo-note">Text to speech.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/userstring">userstring</a><span class="repo-note">User string generator.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-06</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/vesper">vesper</a><span class="repo-note">Gemini client.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-06-22</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/via">via</a><span class="repo-note">Browser.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-07-04</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/videos">videos</a><span class="repo-note">Video notes.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-03-13</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/weight">weight</a><span class="repo-note">Message classifier.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-02-01</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/welcomebot">welcomebot</a><span class="repo-note">Welcome bot.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/welcomeissues">welcomeissues</a><span class="repo-note">Welcome issues.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-24</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/xaisdk">xaisdk</a><span class="repo-note">xAI API SDK.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-09-05</span>
-          </div></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/xgboostapi2">xgboostapi2</a><span class="repo-note">Prediction API.</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2026-05-31</span>
-          </div></li>
-        <li archived><a class="repo-name" href="https://github.com/palmshed/xnubuild">xnubuild</a><span class="repo-note">XNU build notes.</span><span class="archived">archived</span>
-          <div class="repo-meta">
-            <span>Last pushed: 2025-11-22</span>
-          </div></li>
-        </ul>
-    <!-- repo-list-end -->
-<!-- ==========================================================================
-     End generated repository list
-     ========================================================================== -->
-      </details>
-      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/palmshed.github.io/issues">Report an issue</a>.</p>
     </section>
   </div>
 
@@ -1075,7 +819,6 @@
         <li><a href="https://github.com/palmshed">GitHub</a></li>
         <li><a href="./projects.html">Projects</a></li>
         <li><a href="./cursor.html">Cursor</a></li>
-        <li><a href="./docs.html">Docs</a></li>
       </ul>
     </footer>
 

@@ -91,6 +91,196 @@
     .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
     .feedback a { color: inherit; }
 
+    /* Via browser mockup */
+    .via-browser {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--bg);
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .via-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .via-dots {
+      display: flex;
+      gap: 0.375rem;
+      flex-shrink: 0;
+      margin-right: 0.25rem;
+    }
+
+    .via-dot {
+      width: 0.625rem;
+      height: 0.625rem;
+      border-radius: 50%;
+    }
+
+    .via-dot.red { background: #fe5f57; }
+    .via-dot.yellow { background: #febc2e; }
+    .via-dot.green { background: #28c840; }
+
+    .via-nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.125rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.125rem;
+      flex-shrink: 0;
+    }
+
+    .via-nav-pill button {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 0;
+      background: none;
+      border-radius: 8px;
+      cursor: default;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .via-nav-pill button:hover { background: var(--code-bg); }
+
+    .via-toolbar-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 0;
+      background: none;
+      border-radius: 6px;
+      cursor: default;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .via-toolbar-icon:hover { background: var(--code-bg); }
+
+    .via-addr-pill {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.1875rem 0.5rem;
+      background: var(--bg);
+    }
+
+    .via-addr-pill .addr-icon {
+      font-size: 0.6875rem;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .via-addr-pill .addr-url {
+      flex: 1;
+      font-size: 0.75rem;
+      color: var(--text);
+      font-family: var(--font);
+      border: 0;
+      outline: none;
+      background: none;
+    }
+
+    .via-addr-pill .addr-url::placeholder { color: var(--text-secondary); }
+
+    .via-addr-pill .addr-action {
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 0;
+      background: none;
+      border-radius: 4px;
+      cursor: default;
+      font-size: 0.6875rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .via-addr-pill .addr-action:hover { background: var(--code-bg); }
+
+    .via-tab-strip {
+      display: flex;
+      align-items: stretch;
+      min-height: 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .via-tab-strip-item {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      border-bottom: 2px solid transparent;
+      cursor: default;
+      white-space: nowrap;
+      font-family: var(--font);
+      min-width: 0;
+    }
+
+    .via-tab-strip-item.active {
+      color: var(--text);
+      border-bottom-color: var(--accent);
+    }
+
+    .via-tab-strip-item .tab-close {
+      font-size: 0.5625rem;
+      opacity: 0.35;
+      margin-left: 0.125rem;
+    }
+
+    .via-tab-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    .via-content {
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1rem;
+      min-height: 180px;
+    }
+
+    .via-content svg { width: 2rem; height: 2rem; opacity: 0.5; }
+    .via-content .via-page-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .via-content .via-page-sub {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      max-width: 280px;
+      line-height: 1.5;
+    }
+
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
       .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
@@ -148,6 +338,56 @@
     </section>
 
     <section>
+      <div class="via-browser">
+        <div class="via-toolbar">
+          <div class="via-dots">
+            <span class="via-dot red"></span>
+            <span class="via-dot yellow"></span>
+            <span class="via-dot green"></span>
+          </div>
+          <div class="via-addr-pill">
+            <span class="addr-icon">&#128269;</span>
+            <input class="addr-url" type="text" value="palmshed.github.io" readonly>
+            <button type="button" class="addr-action" aria-label="Refresh" tabindex="-1">&#8635;</button>
+          </div>
+          <div class="via-nav-pill">
+            <button type="button" aria-label="Back" tabindex="-1">&#8592;</button>
+            <button type="button" aria-label="Forward" tabindex="-1">&#8594;</button>
+          </div>
+          <button type="button" class="via-toolbar-icon" aria-label="New tab" tabindex="-1">+</button>
+          <button type="button" class="via-toolbar-icon" aria-label="More" tabindex="-1">&#8942;</button>
+        </div>
+        <div class="via-tab-strip">
+          <div class="via-tab-strip-item active">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+            palmshed
+            <span class="tab-close">&#10005;</span>
+          </div>
+          <div class="via-tab-strip-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            GitHub
+            <span class="tab-close">&#10005;</span>
+          </div>
+          <div class="via-tab-strip-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Flutter
+            <span class="tab-close">&#10005;</span>
+          </div>
+        </div>
+        <div class="via-content">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1f883d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/>
+            <path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/>
+            <path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/>
+            <path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/>
+          </svg>
+          <div class="via-page-title">palmshed</div>
+          <div class="via-page-sub">Open source engineering studio</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <h2>Resources</h2>
       <ul>
         <li><a href="https://github.com/palmshed/via">GitHub</a></li>
@@ -162,7 +402,6 @@
       <li><a href="https://github.com/palmshed">GitHub</a></li>
       <li><a href="./projects.html">Projects</a></li>
       <li><a href="./cursor.html">Cursor</a></li>
-      <li><a href="./docs.html">Docs</a></li>
     </ul>
   </footer>
 

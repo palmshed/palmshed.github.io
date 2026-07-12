@@ -91,6 +91,130 @@
     .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
     .feedback a { color: inherit; }
 
+    .review-card {
+      border: 1px solid var(--border); border-radius: 12px;
+      margin-top: 1.5rem; overflow: hidden;
+    }
+    .review-card > .review-card { border-radius: 0; border-left: none; border-right: none; border-bottom: none; margin-top: 0; }
+    .review-entry {
+      display: flex; gap: 0.75rem; padding: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .review-entry:last-child { border-bottom: none; }
+    .review-mark {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .review-mark svg { width: 18px; height: 18px; }
+    .review-mark-sm { width: 28px; height: 28px; }
+    .review-mark-sm svg { width: 14px; height: 14px; }
+    .review-body { flex: 1; min-width: 0; }
+    .review-meta {
+      font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 0.5rem;
+    }
+    .review-meta strong { color: var(--text); font-weight: 500; }
+    .review-meta a { color: var(--text-secondary); text-underline-offset: 2px; }
+    .review-meta a:hover { color: var(--accent); }
+    .review-block {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden;
+    }
+    .review-block-hd {
+      display: flex; align-items: center; gap: 0.375rem;
+      padding: 0.5rem 0.75rem; font-size: 0.8125rem; font-weight: 500;
+      background: var(--code-bg); border-bottom: 1px solid var(--border);
+    }
+    .review-block-hd svg { flex-shrink: 0; color: var(--text-secondary); }
+    .review-block-bd { padding: 1rem; }
+    .review-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.8125rem; line-height: 1.5;
+    }
+    .review-table th {
+      text-align: left; font-weight: 500; color: var(--text);
+      padding: 0.375rem 0.5rem; border-bottom: 1px solid var(--border);
+    }
+    .review-table td {
+      padding: 0.375rem 0.5rem; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .review-table td:first-child { font-family: var(--mono); font-size: 0.75rem; }
+    .review-text { font-size: 0.875rem; line-height: 1.65; color: var(--text-secondary); }
+    .review-text p { margin-bottom: 0.75rem; }
+    .review-text p:last-child { margin-bottom: 0; }
+    .review-text h3 {
+      font-size: 1rem; font-weight: 500; color: var(--text);
+      margin: 1.25rem 0 0.5rem;
+    }
+    .review-text h3:first-child { margin-top: 0; }
+    .review-text ol { padding-left: 1.25rem; margin-bottom: 0.75rem; }
+    .review-text ol li { margin-bottom: 0.5rem; line-height: 1.6; }
+    .review-text ol li:last-child { margin-bottom: 0; }
+    .review-text ol li strong { color: var(--text); }
+    .review-text ol li code { font-size: 0.8125rem; }
+    .review-text hr { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+    .review-text code { font-size: 0.8125rem; }
+    .review-diff {
+      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      margin: 0.75rem 0;
+    }
+    .review-diff-hd {
+      padding: 0.375rem 0.75rem; font-family: var(--mono); font-size: 0.75rem;
+      color: var(--text-secondary); background: var(--code-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .review-diff-bd {
+      padding: 0.75rem; font-family: var(--mono); font-size: 0.75rem;
+      line-height: 1.55; overflow-x: auto;
+    }
+    .review-diff-bd .dl { display: block; white-space: pre; }
+    .review-diff-bd .dh { display: inline-block; width: 1.5rem; text-align: right; margin-right: 0.75rem; color: var(--text-secondary); }
+    .review-diff-bd .dg { background: var(--code-bg); }
+    .review-diff-bd .dd { color: #1a7f37; background: #dafbe1; }
+    .review-diff-bd .dr { color: #cf222e; background: #ffebe9; }
+    .review-file {
+      border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+      margin-top: 0.75rem;
+    }
+    .review-file-hd {
+      display: flex; align-items: center; gap: 0.375rem;
+      padding: 0.5rem 0.75rem; font-family: var(--mono); font-size: 0.75rem;
+      color: var(--text-secondary); background: var(--code-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .review-file-hd svg { flex-shrink: 0; }
+    .review-file-hd .fn { color: var(--text); }
+    .review-file-hd .fp { color: var(--text-secondary); }
+    .review-file-bd { }
+    .review-file-bd .review-diff { border-radius: 0; border-left: none; border-right: none; border-top: none; margin: 0; }
+    .review-file-bd .review-diff-hd { border-radius: 0; }
+    .review-msg { padding: 0.75rem; border-bottom: 1px solid var(--border); }
+    .review-suggest { padding: 0.75rem; }
+    .review-suggest-label {
+      display: flex; align-items: center; gap: 0.25rem; margin-bottom: 0.5rem;
+      font-size: 0.8125rem; font-weight: 500; color: var(--text);
+    }
+    .review-suggest-label svg { width: 14px; height: 14px; color: var(--accent); }
+    .review-suggest-code {
+      background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.75rem; font-family: var(--mono); font-size: 0.75rem;
+      line-height: 1.5; white-space: pre;
+    }
+    .review-btn {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      padding: 0.5rem 0.875rem; margin-top: 0.75rem;
+      font-size: 0.8125rem; font-weight: 500; font-family: var(--font);
+      color: var(--bg); background: var(--accent);
+      border: none; border-radius: 6px;
+    }
+    .review-btn svg { width: 14px; height: 14px; }
+    .review-mono { font-family: var(--mono); }
+    .review-sm { font-size: 0.8125rem; }
+    .review-mb { margin-bottom: 0.75rem; }
+    .review-diff-bb { border-bottom: 1px solid var(--border); }
+    .review-msg-inner { display: flex; gap: 0.5rem; align-items: flex-start; }
+
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
       .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
@@ -149,6 +273,113 @@
     </section>
 
     <section>
+      <h2>Usage</h2>
+      <p>Install the Nuntius Review GitHub App on any repository. It analyzes pull requests and posts feedback on code quality, correctness, and maintainability.</p>
+      <div class="review-card">
+        <div class="review-entry">
+          <div class="review-mark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+          </div>
+          <div class="review-body">
+            <div class="review-meta">
+              <strong>nuntius-review</strong> &middot; <a href="https://github.com/palmshed/alma/commit/b70cbd1c0e9286c7c759a6e94483a71c6be01d02">b70cbd1</a>
+            </div>
+            <div class="review-block">
+              <div class="review-block-hd">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/></svg>
+                Nuntius
+              </div>
+              <div class="review-block-bd">
+                <table class="review-table">
+                  <thead>
+                    <tr><th scope="col">Commit</th><th scope="col">Summary</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><a href="https://github.com/palmshed/alma/commit/b70cbd1c0e9286c7c759a6e94483a71c6be01d02">b70cbd1</a></td><td>Footer pages: fix doc title, h2/p base typography, header/body text parity with static</td></tr>
+                  </tbody>
+                </table>
+                <div class="review-text">
+                  <p>Here is an analysis of the provided code changes, focusing on code quality, correctness, and robustness.</p>
+                  <h3>Analysis</h3>
+                  <ol>
+                    <li><strong>Path Resolution Robustness (Excellent Improvement)</strong><br>In <code>backend/static_app.py</code>, changing hardcoded relative paths to absolute paths resolved dynamically via <code>Path(__file__).resolve()</code> is a great improvement. This ensures the Flask application can be started from any working directory.</li>
+                    <li><strong>Type Consistency for <code>PAGES_DIR</code></strong><br>While modern Python and Flask support <code>pathlib.Path</code> objects, converting <code>PAGES_DIR</code> to a string ensures maximum compatibility and prevents potential type errors.</li>
+                    <li><strong>Truncated Diff Note</strong><br>The diff for <code>deploy/static/web/pages/contact.html</code> is truncated, but the removal of inline SVG and theme pickers suggests a cleanup or refactoring into React components.</li>
+                  </ol>
+                  <hr>
+                  <h3>Suggestions</h3>
+                  <p><strong>1. Ensure Type Consistency for <code>PAGES_DIR</code></strong></p>
+                  <p>To prevent any potential compatibility issues with older Python environments or string-based path manipulations later in the code, convert <code>PAGES_DIR</code> to a string representation.</p>
+                  <div class="review-diff">
+                    <div class="review-diff-hd">backend/static_app.py</div>
+                    <div class="review-diff-bd">
+<span class="dl dr"><span class="dh">-</span>    PAGES_DIR = REPO_DIR / "deploy/static/web/pages"</span>
+<span class="dl dd"><span class="dh">+</span>    PAGES_DIR = str(REPO_DIR / "deploy/static/web/pages")</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-entry">
+          <div class="review-mark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+          </div>
+          <div class="review-body">
+            <div class="review-meta">
+              <strong>nuntius-review</strong> &middot; review on <a href="https://github.com/palmshed/alma/pull/96/files/b70cbd1c0e9286c7c759a6e94483a71c6be01d02">backend/static_app.py</a>
+            </div>
+            <div class="review-block">
+              <div class="review-block-hd">
+                <svg viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/></svg>
+                Nuntius
+              </div>
+              <div class="review-block-bd">
+                <p class="review-text review-mb">Nuntius Analysis for <a href="https://github.com/palmshed/alma/commit/b70cbd1c0e9286c7c759a6e94483a71c6be01d02" class="review-mono">b70cbd1</a></p>
+                <div class="review-file">
+                  <div class="review-file-hd">
+                    <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M2 1.75C2 .784 2.784 0 3.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 12.25 16h-8.5A1.75 1.75 0 0 1 2 14.25Z"/></svg>
+                    <span class="fn">static_app.py</span>
+                    <span class="fp">backend/</span>
+                  </div>
+                  <div class="review-file-bd">
+                    <div class="review-diff">
+                      <div class="review-diff-hd">@@ -36,9 +40,7 @@ def create_static_app():</div>
+                      <div class="review-diff-bd review-diff-bb">
+<span class="dl dg">     app.register_blueprint(conversations_bp)</span>
+                      </div>
+                    </div>
+                    <div class="review-msg">
+                      <div class="review-msg-inner">
+                        <div class="review-mark review-mark-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+                      </div>
+                      <div class="review-text review-sm">To prevent any potential compatibility issues with older Python environments or string-based path manipulations later in the code, convert <code>PAGES_DIR</code> to a string representation.</div>
+                        </div>
+                      </div>
+                    <div class="review-suggest">
+                      <div class="review-suggest-label">
+                        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.75 0C1.955 0 0 1.533 0 3.75v8.5C0 14.467 1.955 16 3.75 16h8.5c1.795 0 3.75-1.533 3.75-3.75v-8.5C16 1.533 14.045 0 12.25 0ZM3 6.25A.75.75 0 0 1 3.75 5.5h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 3 6.25Z"/></svg>
+                        Suggested change
+                      </div>
+                      <div class="review-suggest-code">    PAGES_DIR = str(REPO_DIR / "deploy/static/web/pages")</div>
+                      <button type="button" class="review-btn">
+                        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.75 0C1.955 0 0 1.533 0 3.75v8.5C0 14.467 1.955 16 3.75 16h8.5c1.795 0 3.75-1.533 3.75-3.75v-8.5C16 1.533 14.045 0 12.25 0ZM3 6.25A.75.75 0 0 1 3.75 5.5h8.5a.75.75 0 0 1 0 1.5h-8.5A.75.75 0 0 1 3 6.25Z"/></svg>
+                        Apply suggestion
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <h2>Resources</h2>
       <ul>
         <li><a href="https://github.com/palmshed/nuntius">GitHub</a></li>
@@ -165,7 +396,6 @@
       <li><a href="https://github.com/palmshed">GitHub</a></li>
       <li><a href="./projects.html">Projects</a></li>
       <li><a href="./cursor.html">Cursor</a></li>
-      <li><a href="./docs.html">Docs</a></li>
     </ul>
   </footer>
 

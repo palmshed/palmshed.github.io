@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>markdownpro</title>
-  <meta name="description" content="markdownpro ~ Markdown workflow app.">
+  <title>principles</title>
+  <meta name="description" content="palmshed design principles.">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <style>
@@ -74,9 +74,20 @@
     .page h2 { font-size: 1.375rem; font-weight: 500; margin-bottom: 1rem; color: var(--text); line-height: 1.3; }
     .page p { margin-bottom: 1.25rem; color: var(--text-secondary); line-height: 1.7; }
     .page p:last-child { margin-bottom: 0; }
+    .page ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: var(--text-secondary); }
+    .page ol li { margin-bottom: 0.75rem; line-height: 1.6; }
+    .page ol li:last-child { margin-bottom: 0; }
+    .page ol li strong { color: var(--text); }
     .page ul { margin-bottom: 1.25rem; padding-left: 1.25rem; color: var(--text-secondary); }
     .page li { margin-bottom: 0.5rem; line-height: 1.6; }
     .page li:last-child { margin-bottom: 0; }
+    .page hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+    .page .source-link {
+      font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 2rem;
+    }
+    .page .source-link a { color: var(--text-secondary); text-decoration-color: var(--border); }
+    .page .source-link a:hover { color: var(--accent); }
 
     footer {
       max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
@@ -87,9 +98,6 @@
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
     .footer-links a { color: var(--text-secondary); font-size: 0.8125rem; text-decoration: none; }
     .footer-links a:hover { color: var(--text); }
-
-    .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
-    .feedback a { color: inherit; }
 
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
@@ -113,7 +121,6 @@
       .hero { padding: 1.5rem 1rem 1rem; }
       .page { padding: 0 1rem 2rem; }
       .page section + section { margin-top: 2rem; }
-      pre { padding: 0.75rem 1rem; }
       footer { gap: 0.75rem; }
       .footer-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
       .footer-links a { display: inline-block; padding: 0.75rem 0; }
@@ -136,23 +143,60 @@
 
   <div class="hero">
     <div class="hero-content">
-      <h1>markdownpro</h1>
-      <p>Markdown workflow app.</p>
+      <h1>Principles</h1>
+      <p>How we design, build, and write.</p>
     </div>
   </div>
 
   <div class="page">
+    <p class="source-link">Source: <a href="https://github.com/palmshed/palmshed.github.io/blob/main/AGENTS.md">AGENTS.md</a></p>
+
     <section>
-      <h2>About</h2>
-      <p>Markdownpro is a markdown editing and workflow management application.</p>
+      <h2>Design</h2>
+      <ol>
+        <li><strong>Inform before persuade.</strong> The page explains the organization. Any positive impression should come from the work itself.</li>
+        <li><strong>One purpose per section.</strong> Every section must have a distinct job. If two sections overlap, merge them. If a section cannot justify its existence, remove it.</li>
+        <li><strong>Typography establishes hierarchy.</strong> Use typography, spacing, and document structure before introducing decorative elements.</li>
+        <li><strong>Fewer concepts are better.</strong> Prefer removing over adding. If something can be removed instead of improved, remove it.</li>
+        <li><strong>Capabilities over technologies.</strong> Describe what you build, not which frameworks or tools you use. The page will age better.</li>
+        <li><strong>Static by design.</strong> Prefer static documents over application logic. Introduce frameworks or client-side behavior only when they solve a demonstrated problem.</li>
+        <li><strong>Software over website.</strong> The page documents the engineering organization. It is not a marketing site or a product landing page.</li>
+        <li><strong>Justify every addition.</strong> Every new section, component, interaction, or abstraction should justify why the existing structure cannot express the same information. Prefer removing, merging, or simplifying before adding.</li>
+        <li><strong>Inevitable structure.</strong> Nothing should look like it was added because it could be. Everything should appear because it is necessary to understand the organization.</li>
+        <li><strong>Patterns are earned.</strong> Do not abstract a pattern before it has appeared at least three times. Until then, duplication is often simpler than abstraction. A new reusable component should emerge from repeated natural solutions, not from anticipating future needs.</li>
+        <li><strong>Stability over novelty.</strong> Once a pattern has proven itself, changing it requires stronger justification than introducing it originally. Familiarity is part of the design.</li>
+        <li><strong>Repositories should reflect the page.</strong> Keep the codebase as quiet as the site. Documentation, structure, and tooling should be understandable without reading implementation details.</li>
+      </ol>
     </section>
 
     <section>
-      <h2>Resources</h2>
+      <h2>Writing</h2>
       <ul>
-        <li><a href="https://github.com/palmshed/markdownpro">GitHub</a></li>
+        <li>Prefer short, direct sentences.</li>
+        <li>Avoid em dashes, exclamation marks (except for critical notices), and words like &ldquo;amazing&rdquo;, &ldquo;exciting&rdquo;, &ldquo;incredible&rdquo;, &ldquo;powerful&rdquo;.</li>
+        <li>Let the content speak for itself. If something feels like it is trying to attract attention, simplify or remove it.</li>
+        <li>Announcement bar: if there is nothing important to announce, remove it. If it stays, one short sentence, no exclamation marks, no marketing phrasing.</li>
+        <li>This is an open source engineering organization site. Write with the understated tone of LLVM, Rust, or OpenBSD. State what something is without trying to persuade.</li>
       </ul>
-      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/markdownpro/issues">Report an issue</a>.</p>
+    </section>
+
+    <section>
+      <h2>Interaction</h2>
+      <p>Interactions should reveal capability, not compensate for layout.</p>
+      <p>Before adding a hover or popover interaction, ask whether the information needs to be hidden in the first place. If the page works as a static, predictable document, prefer always-visible text or a native <code>&lt;details&gt;</code> disclosure. Only introduce a hover pattern if the same interaction is likely to be reused across multiple locations on the page.</p>
+      <p>If adding context to static elements, prefer:</p>
+      <ul>
+        <li>Tooltip on hover (quiet, no layout shift)</li>
+        <li>Native <code>&lt;details&gt;</code> disclosure matching the Repository Archive pattern</li>
+        <li>Small always-visible secondary line of text</li>
+      </ul>
+      <p>Avoid on this page:</p>
+      <ul>
+        <li>Sliding panels, drawers, popover modals</li>
+        <li>Horizontal carousels</li>
+        <li>Animated cards or shift-on-hover content</li>
+        <li>Interaction patterns that don&rsquo;t exist anywhere else on the page</li>
+      </ul>
     </section>
   </div>
 

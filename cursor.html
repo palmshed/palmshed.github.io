@@ -105,6 +105,25 @@
     .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
     .feedback a { color: inherit; }
 
+    .cursor-term {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      line-height: 1.65;
+    }
+    .term-line { margin-bottom: 0.375rem; }
+    .term-line:last-child { margin-bottom: 0; }
+    .term-badge { color: var(--accent); margin-right: 0.25rem; }
+    .term-header { color: var(--text-secondary); font-weight: 500; }
+    .term-status { color: var(--accent); font-size: 0.75rem; }
+    .term-prompt { color: var(--text-secondary); }
+    .term-response { color: var(--accent); }
+    .term-body { color: var(--text); }
+
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
       .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
@@ -174,9 +193,14 @@ brew install palmshed/cursor/cursor</code></pre>
 
     <section>
       <h2>Usage</h2>
-      <pre><code>cursor explain "describe this project"
-cursor review
-cursor chat</code></pre>
+      <p>Cursor runs in the terminal. Start a conversation with any prompt.</p>
+      <div class="cursor-term">
+        <div class="term-line term-header"><span class="term-badge">▌</span> CURSOR</div>
+        <div class="term-line term-status">offline · qwen2.5-coder:1.5b</div>
+        <div class="term-line term-prompt">&gt; explain this project</div>
+        <div class="term-line term-response">cursor</div>
+        <div class="term-line term-body">This project is a terminal-native AI coding agent. Work with codebases, files, repositories, and shell commands through a conversation-first interface.</div>
+      </div>
     </section>
 
     <section>
