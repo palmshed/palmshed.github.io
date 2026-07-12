@@ -4,12 +4,12 @@ Sync script (renderer only).
 
 - Reads project metadata from data/projects.json (map of repo name -> overrides).
 - Fetches GitHub repo facts via the API (description, archived, pushed_at, etc.).
-- Combines overrides with GitHub facts and renders the repo list into index.html.
+- Combines overrides with GitHub facts and renders the repo list into projects.html.
 
 Design constraints:
 - data/projects.json is the single source of org-owned metadata.
 - Lightweight validation: fail only on malformed JSON or invalid field types.
-- Only index.html may be modified.
+- Only projects.html may be modified.
 """
 
 import os
@@ -186,15 +186,15 @@ def main():
     lis = [make_li(r, overrides) for r in repos_sorted]
     new_list_html = '        <ul class="repo-list">\n' + "\n".join(lis) + '\n        </ul>\n'
 
-    path = 'index.html'
+    path = 'projects.html'
     if not os.path.exists(path):
-        logging.error('index.html not found in repo root')
+        logging.error('projects.html not found in repo root')
         sys.exit(1)
 
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Prefer explicit markers in index.html for the repo list. This is the contract:
+    # Prefer explicit markers in projects.html for the repo list. This is the contract:
     #   <!-- repo-list-start -->
     #   <ul class="repo-list"> ... </ul>
     #   <!-- repo-list-end -->
@@ -206,7 +206,7 @@ def main():
         _, after = rest.split(end_marker, 1)
         new_content = before + start_marker + "\n" + new_list_html + "    " + end_marker + after
     else:
-        logging.error('Could not find repo-list markers %r and %r in index.html; please add them around the <ul class="repo-list"> block.', start_marker, end_marker)
+        logging.error('Could not find repo-list markers %r and %r in projects.html; please add them around the <ul class="repo-list"> block.', start_marker, end_marker)
         sys.exit(1)
 
     today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
@@ -218,7 +218,7 @@ def main():
 
     with open(path, 'w', encoding='utf-8') as f:
         f.write(new_content)
-    print('index.html updated')
+    print('projects.html updated')
 
 
 if __name__ == '__main__':
