@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in</title>
+  <meta name="description" content="Sign in to Palmshed.">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/mark.svg">
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+  <script>
+    // Load public config, then render the captcha widget with the real site key.
+    window.__captchaSiteKey = "";
+    window.__captchaProvider = "hcaptcha";
+    fetch('/api/config').then(function (r) { return r.json(); }).then(function (cfg) {
+      window.__captchaSiteKey = cfg.captchaSiteKey || "";
+      window.__captchaProvider = cfg.captchaProvider || "hcaptcha";
+      if (window.hcaptcha && window.__captchaSiteKey) {
+        window.hcaptcha.render(document.querySelector('.h-captcha'), {
+          sitekey: window.__captchaSiteKey, theme: 'dark'
+        });
+      }
+    }).catch(function () {});
+  </script>
+  <style>
+    :root {
+      --bg: #080909; --surface: #0e1010; --text: #e1e2e2; --text-secondary: #8f9191;
+      --accent: #91AAA6; --border: rgba(255,255,255,0.04); --code-bg: rgba(255,255,255,0.015);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 2rem 1.5rem 0; max-width: 960px; margin: 0 auto; }
+    .nav-mark { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); }
+    .nav-links a { font-size: 0.875rem; color: var(--text-secondary); padding: 0.375rem 0.75rem; border-radius: 4px; margin-left: 0.25rem; }
+    .nav-links a:hover { color: var(--text); background: var(--code-bg); text-decoration: none; }
+    main { max-width: 360px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+    h1 { font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; }
+    .sub { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 2rem; }
+    label { display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.375rem; }
+    input[type=text], input[type=password] {
+      width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.625rem 0.75rem; color: var(--text); font-size: 0.9375rem; font-family: var(--font);
+    }
+    input:focus { outline: 1.5px solid var(--accent); outline-offset: 1px; }
+    .field { margin-bottom: 1.25rem; }
+    .captcha-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .captcha-row .hcaptcha { transform: scale(0.9); transform-origin: left; }
+    button.reset-captcha { background: none; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 6px; padding: 0.4rem 0.6rem; font-size: 0.75rem; cursor: pointer; }
+    button.reset-captcha:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+    button.submit { width: 100%; background: var(--accent); color: #080909; border: none; border-radius: 6px; padding: 0.7rem; font-size: 0.9375rem; font-weight: 500; cursor: pointer; }
+    button.submit:disabled { opacity: 0.6; cursor: default; }
+    .row { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; font-size: 0.8125rem; }
+    .msg { font-size: 0.875rem; margin-bottom: 1rem; min-height: 1.2rem; }
+    .msg.error { color: #d98a8a; }
+    .msg.ok { color: var(--accent); }
+    footer { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.8125rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="nav-mark">palmshed</span>
+    <span class="nav-links"><a href="./index.html">Home</a></span>
+  </nav>
+  <main>
+    <h1>Sign in</h1>
+    <p class="sub">Access Palmshed services.</p>
+    <div class="msg" id="msg"></div>
+
+    <form id="form" method="post">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+      </div>
+      <div class="captcha-row">
+        <div class="h-captcha"></div>
+        <button type="button" class="reset-captcha" id="resetCaptcha">Reset</button>
+      </div>
+      <button type="submit" class="submit" id="submit">Sign in</button>
+      <div class="row">
+        <a href="#" id="forgot">Forgot password?</a>
+      </div>
+    </form>
+  </main>
+  <footer><p>&copy; 2026 Palmshed</p></footer>
+
+  <script>
+    var form = document.getElementById('form');
+    var msg = document.getElementById('msg');
+    var submit = document.getElementById('submit');
+    var forgot = document.getElementById('forgot');
+    var resetBtn = document.getElementById('resetCaptcha');
+    var API = '/api';
+
+    function show(text, kind) { msg.textContent = text; msg.className = 'msg ' + (kind || ''); }
+
+    function captchaToken() {
+      var el = document.querySelector('.h-captcha iframe');
+      // hCaptcha stores the token on the widget; read from the global if present.
+      return (window.hcaptcha && window.hcaptcha.getResponse()) || '';
+    }
+
+    resetBtn.onclick = function () {
+      if (window.hcaptcha) window.hcaptcha.reset();
+    };
+
+    forgot.onclick = function (e) {
+      e.preventDefault();
+      var username = document.getElementById('username').value.trim();
+      if (!username) { show('Enter your username first.', 'error'); return; }
+      forgot.textContent = 'Sending...';
+      fetch(API + '/forgot-password', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ username: username, captcha: captchaToken() })
+      }).then(function () {
+        show('If the account exists, a reset link was sent.', 'ok');
+        forgot.textContent = 'Forgot password?';
+      }).catch(function () { show('Something went wrong.', 'error'); forgot.textContent = 'Forgot password?'; });
+    };
+
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      var username = document.getElementById('username').value.trim();
+      var password = document.getElementById('password').value;
+      var captcha = captchaToken();
+      if (!username || !password) { show('Fill in all fields.', 'error'); return; }
+      if (!captcha) { show('Complete the captcha.', 'error'); return; }
+      submit.disabled = true; submit.textContent = 'Signing in...';
+      fetch(API + '/login', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ username: username, password: password, captcha: captcha })
+      }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (res) {
+          if (res.ok && res.d.ok) { show('Signed in.', 'ok'); }
+          else { show(res.d.error || 'Sign in failed.', 'error'); if (window.hcaptcha) window.hcaptcha.reset(); }
+        })
+        .catch(function () { show('Network error.', 'error'); })
+        .finally(function () { submit.disabled = false; submit.textContent = 'Sign in'; });
+    };
+  </script>
+</body>
+</html>

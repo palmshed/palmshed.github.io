@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": null,
+  "outputDirectory": ".github/site",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/.github/site/$1" }
+  ],
+  "functions": {
+    "api/*.js": { "runtime": "nodejs20.x" }
+  }
+}
