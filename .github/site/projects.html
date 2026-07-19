@@ -47,7 +47,8 @@
     .slide { flex: 0 0 100%; padding: 2rem; min-height: 400px; }
     .slide-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
     .slide-name { font-size: 1.125rem; font-weight: 500; color: var(--text); }
-    .slide-tag { font-size: 0.65rem; font-weight: 500; color: var(--text-secondary); background: var(--code-bg); border: 1px solid var(--border); padding: 0.1rem 0.4rem; border-radius: 3px; }
+    .slide-tag { font-size: 0.75rem; font-weight: 400; color: var(--text-secondary); }
+    .slide-tag::before { content: "· "; }
     .slide-desc { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; }
     .slide-mock { display: flex; justify-content: center; }
     /* Mocks - use site palette */
@@ -127,7 +128,7 @@
 
             <!-- cursor -->
             <div class="slide">
-              <div class="slide-head"><span class="slide-name">cursor</span><span class="slide-tag">featured</span></div>
+              <div class="slide-head"><span class="slide-name">cursor</span></div>
               <div class="slide-desc">Terminal-first autonomous coding agent.</div>
               <div class="slide-mock">
                 <div class="mock">
