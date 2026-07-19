@@ -718,14 +718,19 @@
     }
   </style>
 </head>
-<body>
+<body style="opacity:0">
   <script>
-    // Send unauthenticated visitors to the sign-in page.
+    // Send unauthenticated visitors to the sign-in page. Keep the page hidden
+    // until the check resolves to avoid a flash of the homepage before redirect.
     (function () {
       var API = "https://palmshed-auth.vercel.app";
+      function reveal() { document.body.style.opacity = "1"; }
       fetch(API + "/api/me", { method: "GET", mode: "cors", credentials: "include" })
         .then(function (r) { return r.json(); })
-        .then(function (d) { if (!d.ok) window.location.replace("./login.html"); })
+        .then(function (d) {
+          if (!d.ok) { window.location.replace("./login.html"); return; }
+          reveal();
+        })
         .catch(function () { window.location.replace("./login.html"); });
     })();
   </script>
