@@ -9,10 +9,13 @@
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
   <script>
+    // Backend API lives in a separate Vercel project. The site is on GitHub Pages,
+    // so the API is a different origin. Replace with your Vercel deployment URL.
+    var API_BASE = 'https://palmshed-auth.vercel.app';
     // Load public config, then render the captcha widget with the real site key.
     window.__captchaSiteKey = "";
     window.__captchaProvider = "hcaptcha";
-    fetch('/api/config').then(function (r) { return r.json(); }).then(function (cfg) {
+    fetch(API_BASE + '/api/config').then(function (r) { return r.json(); }).then(function (cfg) {
       window.__captchaSiteKey = cfg.captchaSiteKey || "";
       window.__captchaProvider = cfg.captchaProvider || "hcaptcha";
       if (window.hcaptcha && window.__captchaSiteKey) {
@@ -97,7 +100,8 @@
     var submit = document.getElementById('submit');
     var forgot = document.getElementById('forgot');
     var resetBtn = document.getElementById('resetCaptcha');
-    var API = '/api';
+    // Same base as defined in the head script above.
+    var API = API_BASE;
 
     function show(text, kind) { msg.textContent = text; msg.className = 'msg ' + (kind || ''); }
 
@@ -118,6 +122,7 @@
       forgot.textContent = 'Sending...';
       fetch(API + '/forgot-password', {
         method: 'POST', headers: { 'content-type': 'application/json' },
+        mode: 'cors', credentials: 'include',
         body: JSON.stringify({ username: username, captcha: captchaToken() })
       }).then(function () {
         show('If the account exists, a reset link was sent.', 'ok');
@@ -135,7 +140,7 @@
       submit.disabled = true; submit.textContent = 'Signing in...';
       fetch(API + '/login', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        credentials: 'same-origin',
+        mode: 'cors', credentials: 'include',
         body: JSON.stringify({ username: username, password: password, captcha: captcha })
       }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
         .then(function (res) {
