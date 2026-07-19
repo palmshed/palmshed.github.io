@@ -7,7 +7,7 @@
   <meta name="description" content="Sign in to Palmshed.">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/mark.svg">
-  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+  <script src="https://js.hcaptcha.com/1/api.js?onload=onHcaptchaLoad&render=explicit" async defer></script>
   <script>
     // Backend API lives in a separate Vercel project. The site is on GitHub Pages,
     // so the API is a different origin. Replace with your Vercel deployment URL.
@@ -15,14 +15,20 @@
     // Load public config, then render the captcha widget with the real site key.
     window.__captchaSiteKey = "";
     window.__captchaProvider = "hcaptcha";
-    fetch(API_BASE + '/api/config').then(function (r) { return r.json(); }).then(function (cfg) {
-      window.__captchaSiteKey = cfg.captchaSiteKey || "";
-      window.__captchaProvider = cfg.captchaProvider || "hcaptcha";
-      if (window.hcaptcha && window.__captchaSiteKey) {
+
+    function renderCaptcha() {
+      if (window.hcaptcha && window.__captchaSiteKey && !document.querySelector('.h-captcha iframe')) {
         window.hcaptcha.render(document.querySelector('.h-captcha'), {
           sitekey: window.__captchaSiteKey, theme: 'dark'
         });
       }
+    }
+    window.onHcaptchaLoad = renderCaptcha;
+
+    fetch(API_BASE + '/api/config').then(function (r) { return r.json(); }).then(function (cfg) {
+      window.__captchaSiteKey = cfg.captchaSiteKey || "";
+      window.__captchaProvider = cfg.captchaProvider || "hcaptcha";
+      renderCaptcha();
     }).catch(function () {});
   </script>
   <style>
