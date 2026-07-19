@@ -88,6 +88,8 @@
     .msg.ok { color: var(--accent); }
     footer { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,0.1); }
     footer p { color: rgba(255,255,255,0.5); font-size: 0.8125rem; }
+    footer .cap-badge { margin-top: 0.5rem; font-size: 0.75rem; }
+    footer .cap-badge a { color: var(--text-secondary); }
   </style>
 </head>
 <body>
@@ -130,7 +132,7 @@
       </div>
     </form>
   </main>
-  <footer><p>&copy; 2026 Palmshed</p></footer>
+  <footer><p>&copy; 2026 Palmshed</p><p class="cap-badge">This site is protected by hCaptcha. Its <a href="https://privacypolicy.hcaptcha.com" rel="noopener">Privacy Policy</a> and <a href="https://hcaptcha.com/terms" rel="noopener">Terms of Service</a> apply.</p></footer>
 
   <script>
     var form = document.getElementById('form');

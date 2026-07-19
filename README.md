@@ -30,3 +30,9 @@ python scripts/sync_index.py
 ```
 
 Requires `GITHUB_TOKEN` and `requests`. Run daily via GitHub Actions (see `.github/workflows/sync-org-page.yml`).
+
+## Captcha
+
+The sign-in page uses [hCaptcha](https://www.hcaptcha.com) for bot protection.
+See hCaptcha's [privacy policy](https://privacypolicy.hcaptcha.com) and
+[terms](https://hcaptcha.com/terms).
