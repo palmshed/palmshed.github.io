@@ -719,6 +719,16 @@
   </style>
 </head>
 <body>
+  <script>
+    // Send unauthenticated visitors to the sign-in page.
+    (function () {
+      var API = "https://palmshed-auth.vercel.app";
+      fetch(API + "/api/me", { method: "GET", mode: "cors", credentials: "include" })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { if (!d.ok) window.location.replace("./login.html"); })
+        .catch(function () { window.location.replace("./login.html"); });
+    })();
+  </script>
   <nav>
     <span class="nav-mark">palmshed</span>
     <ul class="nav-links" id="nav">
