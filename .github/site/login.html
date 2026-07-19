@@ -86,9 +86,12 @@
     .msg { font-size: 0.875rem; margin-bottom: 1rem; min-height: 1.2rem; }
     .msg.error { color: #d98a8a; }
     .msg.ok { color: var(--accent); }
-    footer { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    footer { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     footer p { color: rgba(255,255,255,0.5); font-size: 0.8125rem; }
-    footer .cap-badge { margin-top: 0.5rem; font-size: 0.75rem; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { color: rgba(255,255,255,0.45); font-size: 0.8125rem; text-decoration: none; }
+    .footer-links a:hover { color: var(--text); }
+    footer .cap-badge { flex-basis: 100%; margin-top: 0.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.5); }
     footer .cap-badge a { color: var(--text-secondary); }
   </style>
 </head>
@@ -132,7 +135,15 @@
       </div>
     </form>
   </main>
-  <footer><p>&copy; 2026 Palmshed</p><p class="cap-badge"><a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a> · This site is protected by hCaptcha. Its <a href="https://privacypolicy.hcaptcha.com" rel="noopener">Privacy Policy</a> and <a href="https://hcaptcha.com/terms" rel="noopener">Terms of Service</a> apply.</p></footer>
+  <footer>
+    <p>&copy; 2026 Palmshed</p>
+    <ul class="footer-links">
+      <li><a href="https://github.com/palmshed">GitHub</a></li>
+      <li><a href="./privacy.html">Privacy</a></li>
+      <li><a href="./terms.html">Terms</a></li>
+    </ul>
+    <p class="cap-badge">This site is protected by hCaptcha. Its <a href="https://privacypolicy.hcaptcha.com" rel="noopener">Privacy Policy</a> and <a href="https://hcaptcha.com/terms" rel="noopener">Terms of Service</a> apply.</p>
+  </footer>
 
   <script>
     var form = document.getElementById('form');
