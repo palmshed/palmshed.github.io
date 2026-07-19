@@ -11,19 +11,25 @@ async function sendResetEmail(email, token) {
     console.log(`[reset] ${email} -> ${link}`);
     return;
   }
-  await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { "content-type": "application/json", authorization: `Bearer ${process.env.RESEND_API_KEY}` },
-    body: JSON.stringify({
-      from: process.env.RESEND_FROM || "auth@palmshed.io",
-      to: email,
-      subject: "Reset your Palmshed password",
-      html: `<p>Click to reset your password: <a href="${link}">${link}</a></p><p>This link expires in 1 hour.</p>`,
-    }),
-  });
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { "content-type": "application/json", authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+      body: JSON.stringify({
+        from: process.env.RESEND_FROM || "auth@palmshed.io",
+        to: email,
+        subject: "Reset your Palmshed password",
+        html: `<p>Click to reset your password: <a href="${link}">${link}</a></p><p>This link expires in 1 hour.</p>`,
+      }),
+    });
+    if (!res.ok) console.error(`[reset] Resend ${res.status}:`, await res.text());
+    else console.log(`[reset] sent to ${email}`);
+  } catch (e) {
+    console.error(`[reset] send failed:`, e.message);
+  }
 }
 
-export default async function handler(req) {
+export default async function handler(req, res) {
   req = await adapt(req);
   const origin = req.headers.get("origin") || "";
   if (req.method === "OPTIONS") return sendPreflight(res, origin);

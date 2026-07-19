@@ -4,7 +4,7 @@ import { send, sendPreflight, readBody, adapt } from "./_lib/http.js";
 import { eq, and } from "drizzle-orm";
 import { users, passwordResets } from "./_lib/schema.js";
 
-export default async function handler(req) {
+export default async function handler(req, res) {
   req = await adapt(req);
   const origin = req.headers.get("origin") || "";
   if (req.method === "OPTIONS") return sendPreflight(res, origin);

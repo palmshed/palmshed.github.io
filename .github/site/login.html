@@ -41,10 +41,30 @@
     body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 2rem 1.5rem 0; max-width: 960px; margin: 0 auto; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 2rem 1.5rem 0; max-width: 960px; margin: 0 auto; position: relative; }
     .nav-mark { font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); }
-    .nav-links a { font-size: 0.875rem; color: var(--text-secondary); padding: 0.375rem 0.75rem; border-radius: 4px; margin-left: 0.25rem; }
-    .nav-links a:hover { color: var(--text); background: var(--code-bg); text-decoration: none; }
+    .nav-links { gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem; color: var(--text-secondary); text-decoration: none;
+      padding: 0.375rem 0.75rem; border-radius: 4px; transition: none;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--code-bg); }
+    .mobile-menu-toggle {
+      display: none; background: none; border: 1px solid var(--border); border-radius: 4px;
+      cursor: pointer; padding: 0.5rem 0.75rem; color: var(--text-secondary);
+      font-family: var(--font); font-size: 0.8125rem;
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1rem 0; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+        padding: 0.25rem; flex-direction: column; gap: 0; z-index: 100; margin: 0.5rem 1rem 0; }
+      .nav-links.active { display: flex; }
+      .nav-links a { padding: 0.75rem 1rem; font-size: 1rem; border-radius: 0; }
+      .nav-links li:first-child a { border-radius: 6px 6px 0 0; }
+      .nav-links li:last-child a { border-radius: 0 0 6px 6px; }
+      .mobile-menu-toggle { display: flex; align-items: center; padding: 0.75rem 1rem; min-height: 44px; min-width: 44px; }
+    }
     main { max-width: 360px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
     h1 { font-size: 1.5rem; font-weight: 500; margin-bottom: 0.5rem; }
     .sub { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 2rem; }
@@ -72,7 +92,13 @@
 <body>
   <nav>
     <span class="nav-mark">palmshed</span>
-    <span class="nav-links"><a href="./index.html">Home</a><a href="./login.html" class="active">Sign in</a></span>
+    <ul class="nav-links" id="nav">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./projects.html">Projects</a></li>
+      <li><a href="./docs.html">Docs</a></li>
+      <li><a href="./login.html" class="active">Sign in</a></li>
+    </ul>
+    <button type="button" class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">Menu</button>
   </nav>
   <main>
     <h1 id="title">Sign in</h1>
@@ -205,6 +231,15 @@
         .catch(function () { show('Network error.', 'error'); })
         .finally(function () { submit.disabled = false; submit.textContent = 'Sign in'; });
     };
+
+    var toggleBtn = document.querySelector('.mobile-menu-toggle');
+    var navList = document.getElementById('nav');
+    if (toggleBtn && navList) {
+      toggleBtn.addEventListener('click', function () {
+        var open = navList.classList.toggle('active');
+        toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
   </script>
 </body>
 </html>
