@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>principles</title>
-  <meta name="description" content="palmshed design principles.">
+  <title>plugins</title>
+  <meta name="description" content="plugins ~ Palmshed plugin marketplace.">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #1a1a1a;
-      --text-secondary: #6b7280;
-      --accent: #1f883d;
-      --border: #e5e7eb;
-      --code-bg: #f6f8fa;
+      --bg: #080909;
+      --surface: #0e1010;
+      --text: #e1e2e2;
+      --text-secondary: #8f9191;
+      --accent: #91AAA6;
+      --border: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(255, 255, 255, 0.015);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -59,7 +59,7 @@
       cursor: pointer; padding: 0.5rem 0.75rem; color: var(--text-secondary);
       font-family: var(--font); font-size: 0.8125rem;
     }
-    .mobile-menu-toggle:hover { color: var(--text); border-color: var(--text-secondary); }
+    .mobile-menu-toggle:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.15); }
 
     .hero { padding: 3rem 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; }
     .hero-content { max-width: 640px; }
@@ -74,30 +74,22 @@
     .page h2 { font-size: 1.375rem; font-weight: 500; margin-bottom: 1rem; color: var(--text); line-height: 1.3; }
     .page p { margin-bottom: 1.25rem; color: var(--text-secondary); line-height: 1.7; }
     .page p:last-child { margin-bottom: 0; }
-    .page ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: var(--text-secondary); }
-    .page ol li { margin-bottom: 0.75rem; line-height: 1.6; }
-    .page ol li:last-child { margin-bottom: 0; }
-    .page ol li strong { color: var(--text); }
     .page ul { margin-bottom: 1.25rem; padding-left: 1.25rem; color: var(--text-secondary); }
     .page li { margin-bottom: 0.5rem; line-height: 1.6; }
     .page li:last-child { margin-bottom: 0; }
-    .page hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
-
-    .page .source-link {
-      font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 2rem;
-    }
-    .page .source-link a { color: var(--text-secondary); text-decoration-color: var(--border); }
-    .page .source-link a:hover { color: var(--accent); }
 
     footer {
       max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
-      border-top: 1px solid var(--border); display: flex; justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;
       align-items: center; flex-wrap: wrap; gap: 1rem;
     }
-    footer p { color: var(--text-secondary); font-size: 0.8125rem; }
+    footer p { color: rgba(255, 255, 255, 0.5); font-size: 0.8125rem; }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { color: var(--text-secondary); font-size: 0.8125rem; text-decoration: none; }
+    .footer-links a { color: rgba(255, 255, 255, 0.45); font-size: 0.8125rem; text-decoration: none; }
     .footer-links a:hover { color: var(--text); }
+
+    .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
+    .feedback a { color: inherit; }
 
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
@@ -127,6 +119,48 @@
     }
 
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+    .plugin-mock {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+    }
+    .plugin-mock-header {
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      font-size: 0.875rem;
+    }
+    .plugin-mock-tree {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .plugin-mock-item {
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .plugin-mock-sub {
+      color: var(--text-secondary);
+      padding-left: 1rem;
+      margin-bottom: 0.125rem;
+      font-size: 0.75rem;
+    }
+    .plugin-mock-footer {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .plugin-mock-badge {
+      font-size: 0.6875rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-secondary);
+    }
   </style>
 </head>
 <body>
@@ -143,60 +177,55 @@
 
   <div class="hero">
     <div class="hero-content">
-      <h1>Principles</h1>
-      <p>How we design, build, and write.</p>
+      <h1>plugins</h1>
+      <p>Palmshed plugin marketplace.</p>
     </div>
   </div>
 
   <div class="page">
-    <p class="source-link">Source: <a href="https://github.com/palmshed/palmshed.github.io/blob/main/AGENTS.md">AGENTS.md</a></p>
-
     <section>
-      <h2>Design</h2>
-      <ol>
-        <li><strong>Inform before persuade.</strong> The page explains the organization. Any positive impression should come from the work itself.</li>
-        <li><strong>One purpose per section.</strong> Every section must have a distinct job. If two sections overlap, merge them. If a section cannot justify its existence, remove it.</li>
-        <li><strong>Typography establishes hierarchy.</strong> Use typography, spacing, and document structure before introducing decorative elements.</li>
-        <li><strong>Fewer concepts are better.</strong> Prefer removing over adding. If something can be removed instead of improved, remove it.</li>
-        <li><strong>Capabilities over technologies.</strong> Describe what you build, not which frameworks or tools you use. The page will age better.</li>
-        <li><strong>Static by design.</strong> Prefer static documents over application logic. Introduce frameworks or client-side behavior only when they solve a demonstrated problem.</li>
-        <li><strong>Software over website.</strong> The page documents the engineering organization. It is not a marketing site or a product landing page.</li>
-        <li><strong>Justify every addition.</strong> Every new section, component, interaction, or abstraction should justify why the existing structure cannot express the same information. Prefer removing, merging, or simplifying before adding.</li>
-        <li><strong>Inevitable structure.</strong> Nothing should look like it was added because it could be. Everything should appear because it is necessary to understand the organization.</li>
-        <li><strong>Patterns are earned.</strong> Do not abstract a pattern before it has appeared at least three times. Until then, duplication is often simpler than abstraction. A new reusable component should emerge from repeated natural solutions, not from anticipating future needs.</li>
-        <li><strong>Stability over novelty.</strong> Once a pattern has proven itself, changing it requires stronger justification than introducing it originally. Familiarity is part of the design.</li>
-        <li><strong>Repositories should reflect the page.</strong> Keep the codebase as quiet as the site. Documentation, structure, and tooling should be understandable without reading implementation details.</li>
-      </ol>
+      <h2>About</h2>
+      <p>Official plugin marketplace for Mull. Extend Mull with skills, commands, agents, and MCP servers.</p>
     </section>
 
     <section>
-      <h2>Writing</h2>
+      <h2>Preview</h2>
+      <div class="plugin-mock">
+        <div class="plugin-mock-header">plugins/</div>
+        <div class="plugin-mock-tree">
+          <div class="plugin-mock-item">code-review/</div>
+          <div class="plugin-mock-sub">plugin.json</div>
+          <div class="plugin-mock-sub">skills/</div>
+          <div class="plugin-mock-sub">commands/</div>
+          <div class="plugin-mock-sub">agents/</div>
+        </div>
+        <div class="plugin-mock-footer">
+          <span class="plugin-mock-badge">skills</span>
+          <span class="plugin-mock-badge">commands</span>
+          <span class="plugin-mock-badge">agents</span>
+          <span class="plugin-mock-badge">mcp</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Plugin Types</h2>
       <ul>
-        <li>Prefer short, direct sentences.</li>
-        <li>Avoid em dashes, exclamation marks (except for critical notices), and words like &ldquo;amazing&rdquo;, &ldquo;exciting&rdquo;, &ldquo;incredible&rdquo;, &ldquo;powerful&rdquo;.</li>
-        <li>Let the content speak for itself. If something feels like it is trying to attract attention, simplify or remove it.</li>
-        <li>Announcement bar: if there is nothing important to announce, remove it. If it stays, one short sentence, no exclamation marks, no marketing phrasing.</li>
-        <li>This is an open source engineering organization site. Write with the understated tone of LLVM, Rust, or OpenBSD. State what something is without trying to persuade.</li>
+        <li>Skills - Reusable workflows with YAML frontmatter</li>
+        <li>Commands - Any .md file (name = filename stem)</li>
+        <li>Agents - Any .md file in the agents directory</li>
+        <li>Hooks - JSON configuration for event handling</li>
+        <li>MCP Servers - Model Context Protocol integrations</li>
       </ul>
     </section>
 
     <section>
-      <h2>Interaction</h2>
-      <p>Interactions should reveal capability, not compensate for layout.</p>
-      <p>Before adding a hover or popover interaction, ask whether the information needs to be hidden in the first place. If the page works as a static, predictable document, prefer always-visible text or a native <code>&lt;details&gt;</code> disclosure. Only introduce a hover pattern if the same interaction is likely to be reused across multiple locations on the page.</p>
-      <p>If adding context to static elements, prefer:</p>
+      <h2>Resources</h2>
       <ul>
-        <li>Tooltip on hover (quiet, no layout shift)</li>
-        <li>Native <code>&lt;details&gt;</code> disclosure matching the Repository Archive pattern</li>
-        <li>Small always-visible secondary line of text</li>
+        <li><a href="https://github.com/palmshed/plugins">GitHub</a></li>
+        <li><a href="https://palmshed.github.io/plugins/">Site</a></li>
       </ul>
-      <p>Avoid on this page:</p>
-      <ul>
-        <li>Sliding panels, drawers, popover modals</li>
-        <li>Horizontal carousels</li>
-        <li>Animated cards or shift-on-hover content</li>
-        <li>Interaction patterns that don&rsquo;t exist anywhere else on the page</li>
-      </ul>
+      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/plugins/issues">Report an issue</a>.</p>
     </section>
   </div>
 

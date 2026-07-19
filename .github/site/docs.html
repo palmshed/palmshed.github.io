@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>projects</title>
-  <meta name="description" content="palmshed projects.">
+  <title>docs</title>
+  <meta name="description" content="palmshed documentation index.">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #1a1a1a;
-      --text-secondary: #6b7280;
-      --accent: #1f883d;
-      --border: #e5e7eb;
-      --code-bg: #f6f8fa;
+      --bg: #080909;
+      --surface: #0e1010;
+      --text: #e1e2e2;
+      --text-secondary: #8f9191;
+      --accent: #91AAA6;
+      --border: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(255, 255, 255, 0.015);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -59,7 +59,7 @@
       cursor: pointer; padding: 0.5rem 0.75rem; color: var(--text-secondary);
       font-family: var(--font); font-size: 0.8125rem;
     }
-    .mobile-menu-toggle:hover { color: var(--text); border-color: var(--text-secondary); }
+    .mobile-menu-toggle:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.15); }
 
     .hero { padding: 3rem 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; }
     .hero-content { max-width: 640px; }
@@ -80,31 +80,16 @@
 
     footer {
       max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
-      border-top: 1px solid var(--border); display: flex; justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;
       align-items: center; flex-wrap: wrap; gap: 1rem;
     }
-    footer p { color: var(--text-secondary); font-size: 0.8125rem; }
+    footer p { color: rgba(255, 255, 255, 0.5); font-size: 0.8125rem; }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { color: var(--text-secondary); font-size: 0.8125rem; text-decoration: none; }
+    .footer-links a { color: rgba(255, 255, 255, 0.45); font-size: 0.8125rem; text-decoration: none; }
     .footer-links a:hover { color: var(--text); }
 
-    .repo-list {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
-      margin: 1.5rem 0; padding: 0; list-style: none;
-    }
-    .repo-list li {
-      display: grid; gap: 0.1rem; padding: 0.6rem 0; border-top: 1px solid var(--border);
-    }
-    .repo-list li:nth-child(2), .repo-list li:first-child { border-top: 0; }
-    .repo-name { font-weight: 500; font-size: 0.9375rem; }
-    .repo-list a { text-decoration: none; }
-    .repo-list a:hover { text-decoration: underline; }
-    .repo-note { font-size: 0.875rem; color: var(--text-secondary); }
-    .repo-meta { font-size: 0.8125rem; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; }
-    .repo-meta a { color: var(--text-secondary); }
-    .repo-status { color: var(--accent); }
-    .featured { display: inline-block; font-size: 0.75rem; font-weight: 500; color: var(--accent); margin-left: 0.35rem; }
-    .archived { font-size: 0.75rem; color: var(--text-secondary); margin-left: 0.35rem; }
+    .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
+    .feedback a { color: inherit; }
 
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
@@ -121,8 +106,6 @@
       .hero-content { max-width: none; }
       .page { padding: 0 1rem 3rem; }
       .page section + section { margin-top: 2.5rem; }
-      .repo-list { grid-template-columns: 1fr; }
-      .repo-list li:nth-child(2) { border-top: 1px solid var(--border); }
       footer { padding: 1.5rem 1rem 2rem; flex-direction: column; text-align: center; }
     }
 
@@ -143,53 +126,87 @@
     <span class="nav-mark">palmshed</span>
     <ul class="nav-links" id="nav">
       <li><a href="./index.html">Home</a></li>
-      <li><a href="./projects.html" class="active">Projects</a></li>
+      <li><a href="./projects.html">Projects</a></li>
       <li><a href="./cursor.html">Cursor</a></li>
-      <li><a href="./docs.html">Docs</a></li>
+      <li><a href="./docs.html" class="active">Docs</a></li>
     </ul>
     <button type="button" class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">Menu</button>
   </nav>
 
   <div class="hero">
     <div class="hero-content">
-      <h1>Projects</h1>
-      <p>Open source repositories by Palmshed.</p>
+      <h1>Documentation</h1>
+      <p>Guides and references for Palmshed projects.</p>
     </div>
   </div>
 
   <div class="page">
     <section>
-      <h2>All repositories</h2>
-<!-- repo-list-start -->
-      <ul class="repo-list">
-        <li><a class="repo-name" href="https://github.com/palmshed/cursor">cursor</a><span class="repo-note">Autonomous coding agent</span><span class="featured">featured</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/nuntius">nuntius</a><span class="repo-note">Ruby toolkit for language models</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/kernels">kernels</a><span class="repo-note">Swift GPU kernels</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/alma">alma</a><span class="repo-note">Multimodal AI platform</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/via">via</a><span class="repo-note">Browser</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/linea">linea</a><span class="repo-note">Local-first AI assistant</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/mlapi">mlapi</a><span class="repo-note">Machine learning API</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/markdownpro">markdownpro</a><span class="repo-note">Markdown workflow app</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/dotfiles">dotfiles</a><span class="repo-note">Dotfiles toolkit</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/appsdk">appsdk</a><span class="repo-note">GitHub App framework</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/rag">rag</a><span class="repo-note">Containerized Python package</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/barepi">barepi</a><span class="repo-note">Raspberry Pi notes</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/iter">iter</a><span class="repo-note">Autonomous coding agent written in Rust</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/lilt">lilt</a><span class="repo-note">Android messenger</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/simengine">simengine</a><span class="repo-note">Physics simulation engine</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/thread">thread</a><span class="repo-note">Systems compute</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/scout">scout</a><span class="repo-note">Storage tool</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/hautofix">hautofix</a><span class="repo-note">Code repair tool</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/benchmark">benchmark</a><span class="repo-note">Speech benchmark</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/vesper">vesper</a><span class="repo-note">Gemini client</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/glimpse">glimpse</a><span class="repo-note">Logo symbols</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/manager">manager</a><span class="repo-note">Recipe runner</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/l2">l2</a><span class="repo-note">Layer 2 notes</span></li>
-        <li><a class="repo-name" href="https://github.com/palmshed/llamavision">llamavision</a><span class="repo-note">Vision demo</span></li>
+      <h2>Cursor</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/cursor">GitHub repository</a></li>
+        <li><a href="https://github.com/palmshed/cursor-docs">Documentation site</a></li>
+
+        <li><a href="./cursor.html">Project page</a></li>
       </ul>
-      <!-- repo-list-end -->
-      <p class="feedback"><a href="https://github.com/orgs/palmshed/repositories?type=all">View all repositories on GitHub</a></p>
     </section>
+
+    <section>
+      <h2>Nuntius</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/nuntius">GitHub repository</a></li>
+        <li><a href="https://palmshed.github.io/nuntius/">Project site</a></li>
+        <li><a href="https://rubygems.org/gems/nuntius-rb">RubyGem</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Alma</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/alma">GitHub repository</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Via</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/via">GitHub repository</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Mull</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/mull">GitHub repository</a></li>
+        <li><a href="https://palmshed.github.io/mull/">Project site</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Shed</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/shed">GitHub repository</a></li>
+        <li><a href="https://palmshed.github.io/shed/">Project site</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Cursor Docs</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/cursor-docs">GitHub repository</a></li>
+        <li><a href="https://palmshed.github.io/cursor-docs/">Documentation site</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Plugins</h2>
+      <ul>
+        <li><a href="https://github.com/palmshed/plugins">GitHub repository</a></li>
+        <li><a href="https://palmshed.github.io/plugins/">Marketplace site</a></li>
+      </ul>
+    </section>
+
+    <p class="feedback">Missing something? <a href="https://github.com/palmshed/palmshed.github.io/issues">Open an issue</a>.</p>
   </div>
 
   <footer>

@@ -186,9 +186,9 @@ def main():
     lis = [make_li(r, overrides) for r in repos_sorted]
     new_list_html = '        <ul class="repo-list">\n' + "\n".join(lis) + '\n        </ul>\n'
 
-    path = 'projects.html'
+    path = '.github/site/projects.html'
     if not os.path.exists(path):
-        logging.error('projects.html not found in repo root')
+        logging.error('projects.html not found in .github/site/')
         sys.exit(1)
 
     with open(path, 'r', encoding='utf-8') as f:

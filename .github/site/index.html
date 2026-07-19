@@ -9,13 +9,13 @@
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #1a1a1a;
-      --text-secondary: #6b7280;
-      --accent: #1f883d;
-      --border: #e5e7eb;
-      --code-bg: #f6f8fa;
+      --bg: #080909;
+      --surface: #0e1010;
+      --text: #e1e2e2;
+      --text-secondary: #8f9191;
+      --accent: #91AAA6;
+      --border: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(255, 255, 255, 0.015);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -104,7 +104,7 @@
 
     .mobile-menu-toggle:hover {
       color: var(--text);
-      border-color: var(--text-secondary);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
     /* Hero */
@@ -427,7 +427,7 @@
     .cap-preview .via-dot.green { background: #28c840; }
     .cap-preview .via-tab-strip {
       display: flex; padding: 0 0.25rem; background: var(--surface);
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     .cap-preview .via-tab-strip-item {
       display: flex; align-items: center; gap: 0.25rem;
@@ -440,7 +440,7 @@
     .cap-preview .via-toolbar {
       display: flex; align-items: center; gap: 0.25rem;
       padding: 0.1875rem 0.375rem; background: var(--surface);
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     .cap-preview .via-nav-pill {
       display: flex; align-items: center;
@@ -479,6 +479,76 @@
     .cap-preview .via-content svg { width: 0.75rem; height: 0.75rem; opacity: 0.4; }
     .cap-preview .via-page-title { font-size: 0.5625rem; font-weight: 500; color: var(--text-secondary); }
 
+    /* Mull terminal mock */
+    .cap-preview .mull-term {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      line-height: 1.5;
+    }
+    .cap-preview .mull-header {
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      font-size: 0.6875rem;
+    }
+    .cap-preview .mull-row {
+      padding: 0.125rem 0;
+    }
+    .cap-preview .mull-needs-input { color: #d4a84d; }
+    .cap-preview .mull-working { color: #8f9191; }
+    .cap-preview .mull-idle { color: #8f9191; opacity: 0.7; }
+    .cap-preview .mull-line {
+      color: var(--text-secondary);
+    }
+
+    /* Shed editor mock */
+    .cap-preview .shed-editor {
+      background: #1e1e1e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 0.5625rem;
+    }
+    .cap-preview .shed-titlebar {
+      background: #2d2d2d;
+      padding: 0.375rem 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .cap-preview .shed-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .cap-preview .shed-dot.red { background: #ff5f56; }
+    .cap-preview .shed-dot.yellow { background: #ffbd2e; }
+    .cap-preview .shed-dot.green { background: #27c93f; }
+    .cap-preview .shed-filename {
+      color: var(--text-secondary);
+      margin-left: 0.5rem;
+      font-size: 0.5rem;
+    }
+    .cap-preview .shed-content {
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .cap-preview .shed-line-num {
+      color: rgba(255, 255, 255, 0.2);
+      margin-right: 0.5rem;
+      user-select: none;
+    }
+    .cap-preview .shed-keyword { color: #c586c0; }
+    .cap-preview .shed-string { color: #ce9178; }
+    .cap-preview .shed-comment { color: #6a9955; }
+
 
 
     /* Footer */
@@ -486,7 +556,7 @@
       max-width: 960px;
       margin: 0 auto;
       padding: 2rem 1.5rem 3rem;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -495,7 +565,7 @@
     }
 
     footer p {
-      color: var(--text-secondary);
+      color: rgba(255, 255, 255, 0.5);
       font-size: 0.8125rem;
     }
 
@@ -506,7 +576,7 @@
     }
 
     .footer-links a {
-      color: var(--text-secondary);
+      color: rgba(255, 255, 255, 0.45);
       font-size: 0.8125rem;
       text-decoration: none;
     }
@@ -660,7 +730,7 @@
     <div class="hero-content">
 
       <div class="hero-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1f883d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/>
           <path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/>
           <path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/>
@@ -728,6 +798,17 @@
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="./mull.html">mull</a>
+              <div class="cap-preview">
+                <div class="mull-term">
+                  <div class="mull-header">mull · Dashboard</div>
+                  <div class="mull-row mull-needs-input">● reviewer · audit token flow</div>
+                  <div class="mull-row mull-working">⋅ implementer · fix login bug</div>
+                  <div class="mull-row mull-idle">○ refactor · feat/login</div>
                 </div>
               </div>
             </li>
@@ -802,9 +883,59 @@
                     <span class="via-toolbar-icon">&#8942;</span>
                   </div>
                   <div class="via-content">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#1f883d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/></svg>
                     <div class="via-page-title">palmshed</div>
                   </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="./shed.html">shed</a>
+              <div class="cap-preview">
+                <div class="shed-editor">
+                  <div class="shed-titlebar">
+                    <span class="shed-dot red"></span>
+                    <span class="shed-dot yellow"></span>
+                    <span class="shed-dot green"></span>
+                    <span class="shed-filename">main.ts</span>
+                  </div>
+                  <div class="shed-content">
+                    <div><span class="shed-line-num">1</span><span class="shed-keyword">import</span> { Editor } <span class="shed-keyword">from</span> <span class="shed-string">'./core'</span>;</div>
+                    <div><span class="shed-line-num">2</span></div>
+                    <div><span class="shed-line-num">3</span><span class="shed-keyword">const</span> editor = <span class="shed-keyword">new</span> Editor({</div>
+                    <div><span class="shed-line-num">4</span>  theme: <span class="shed-string">'dark'</span>,</div>
+                    <div><span class="shed-line-num">5</span>  minimal: <span class="shed-keyword">true</span></div>
+                    <div><span class="shed-line-num">6</span>});</div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Documentation &amp; Tools</h3>
+          <ul>
+            <li>
+              <a href="./cursor-docs.html">cursor-docs</a>
+              <div class="cap-preview">
+                <div class="cursor-term">
+                  <div class="term-line term-header"><span class="term-badge">▌</span> CURSOR</div>
+                  <div class="term-line term-status">documentation</div>
+                  <div class="term-line term-prompt">Architecture · Engineering · Planner</div>
+                  <div class="term-line term-prompt">Telemetry · Proposals · Release</div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="./plugins.html">plugins</a>
+              <div class="cap-preview">
+                <div class="cursor-term">
+                  <div class="term-line term-header"><span class="term-badge">▌</span> PLUGINS</div>
+                  <div class="term-line term-status">mull marketplace</div>
+                  <div class="term-line term-prompt">plugins/</div>
+                  <div class="term-line term-prompt">  code-review/</div>
+                  <div class="term-line term-prompt">    plugin.json</div>
+                  <div class="term-line term-prompt">    skills/</div>
                 </div>
               </div>
             </li>

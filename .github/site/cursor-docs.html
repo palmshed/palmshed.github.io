@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>barepi</title>
-  <meta name="description" content="barepi ~ Raspberry Pi notes.">
+  <title>cursor-docs</title>
+  <meta name="description" content="cursor-docs ~ Cursor documentation website.">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #1a1a1a;
-      --text-secondary: #6b7280;
-      --accent: #1f883d;
-      --border: #e5e7eb;
-      --code-bg: #f6f8fa;
+      --bg: #080909;
+      --surface: #0e1010;
+      --text: #e1e2e2;
+      --text-secondary: #8f9191;
+      --accent: #91AAA6;
+      --border: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(255, 255, 255, 0.015);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -59,7 +59,7 @@
       cursor: pointer; padding: 0.5rem 0.75rem; color: var(--text-secondary);
       font-family: var(--font); font-size: 0.8125rem;
     }
-    .mobile-menu-toggle:hover { color: var(--text); border-color: var(--text-secondary); }
+    .mobile-menu-toggle:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.15); }
 
     .hero { padding: 3rem 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; }
     .hero-content { max-width: 640px; }
@@ -80,12 +80,12 @@
 
     footer {
       max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
-      border-top: 1px solid var(--border); display: flex; justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;
       align-items: center; flex-wrap: wrap; gap: 1rem;
     }
-    footer p { color: var(--text-secondary); font-size: 0.8125rem; }
+    footer p { color: rgba(255, 255, 255, 0.5); font-size: 0.8125rem; }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { color: var(--text-secondary); font-size: 0.8125rem; text-decoration: none; }
+    .footer-links a { color: rgba(255, 255, 255, 0.45); font-size: 0.8125rem; text-decoration: none; }
     .footer-links a:hover { color: var(--text); }
 
     .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
@@ -113,13 +113,50 @@
       .hero { padding: 1.5rem 1rem 1rem; }
       .page { padding: 0 1rem 2rem; }
       .page section + section { margin-top: 2rem; }
-      pre { padding: 0.75rem 1rem; }
       footer { gap: 0.75rem; }
       .footer-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
       .footer-links a { display: inline-block; padding: 0.75rem 0; }
     }
 
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+    .docs-mock {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.8125rem;
+    }
+    .docs-mock-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .docs-mock-badge {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    .docs-mock-nav {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+    }
+    .docs-mock-content {
+      color: var(--text-secondary);
+    }
+    .docs-mock-title {
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    .docs-mock-desc {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -136,23 +173,55 @@
 
   <div class="hero">
     <div class="hero-content">
-      <h1>barepi</h1>
-      <p>Raspberry Pi notes.</p>
+      <h1>cursor-docs</h1>
+      <p>Cursor documentation website.</p>
     </div>
   </div>
 
   <div class="page">
     <section>
       <h2>About</h2>
-      <p>Barepi documents bare-metal Raspberry Pi development, kernel experiments, and low-level system programming.</p>
+      <p>Documentation site for Cursor, the terminal-native AI coding agent. Covers architecture, engineering practices, and system design.</p>
+    </section>
+
+    <section>
+      <h2>Preview</h2>
+      <div class="docs-mock">
+        <div class="docs-mock-header">
+          <span class="docs-mock-badge">CURSOR</span>
+          <span class="docs-mock-nav">documentation</span>
+        </div>
+        <div class="docs-mock-content">
+          <div class="docs-mock-title">Architecture</div>
+          <div class="docs-mock-desc">Component design, audits, reviews</div>
+          <div class="docs-mock-title">Engineering</div>
+          <div class="docs-mock-desc">Quality, calibration, recovery, capacity</div>
+          <div class="docs-mock-title">Planner</div>
+          <div class="docs-mock-desc">Taxonomy, goal model, corpus</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sections</h2>
+      <ul>
+        <li>Architecture - Component design and audits</li>
+        <li>Engineering - Quality and capacity planning</li>
+        <li>Planner - Taxonomy and goal models</li>
+        <li>Telemetry - Failure topology and capability reports</li>
+        <li>Proposals - Design documents and feasibility</li>
+        <li>Release - Checklists and readiness</li>
+        <li>UX - Journey audits and terminal review</li>
+      </ul>
     </section>
 
     <section>
       <h2>Resources</h2>
       <ul>
-        <li><a href="https://github.com/palmshed/barepi">GitHub</a></li>
+        <li><a href="https://github.com/palmshed/cursor-docs">GitHub</a></li>
+        <li><a href="https://palmshed.github.io/cursor-docs/">Site</a></li>
       </ul>
-      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/barepi/issues">Report an issue</a>.</p>
+      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/cursor-docs/issues">Report an issue</a>.</p>
     </section>
   </div>
 

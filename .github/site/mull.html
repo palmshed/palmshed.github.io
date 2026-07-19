@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>cursor</title>
-  <meta name="description" content="cursor ~ terminal-native autonomous coding agent.">
+  <title>mull</title>
+  <meta name="description" content="mull ~ Terminal-based AI coding agent.">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/mark.svg">
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #1a1a1a;
-      --text-secondary: #6b7280;
-      --accent: #1f883d;
-      --border: #e5e7eb;
-      --code-bg: #f6f8fa;
+      --bg: #080909;
+      --surface: #0e1010;
+      --text: #e1e2e2;
+      --text-secondary: #8f9191;
+      --accent: #91AAA6;
+      --border: rgba(255, 255, 255, 0.04);
+      --code-bg: rgba(255, 255, 255, 0.015);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     }
@@ -59,7 +59,7 @@
       cursor: pointer; padding: 0.5rem 0.75rem; color: var(--text-secondary);
       font-family: var(--font); font-size: 0.8125rem;
     }
-    .mobile-menu-toggle:hover { color: var(--text); border-color: var(--text-secondary); }
+    .mobile-menu-toggle:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.15); }
 
     .hero { padding: 3rem 1.5rem 2.5rem; max-width: 960px; margin: 0 auto; }
     .hero-content { max-width: 640px; }
@@ -78,51 +78,18 @@
     .page li { margin-bottom: 0.5rem; line-height: 1.6; }
     .page li:last-child { margin-bottom: 0; }
 
-    pre {
-      background: var(--code-bg); border: 1px solid var(--border); padding: 1rem 1.5rem;
-      overflow-x: auto; margin-top: 1.5rem; margin-bottom: 1.5rem;
-      max-width: 600px; margin-left: auto; margin-right: auto;
-    }
-    pre code {
-      background: none; padding: 0; color: var(--text); font-size: 0.875rem;
-      line-height: 1.65; font-family: var(--mono);
-    }
-    code {
-      font-family: var(--mono); font-size: 0.875em; background: var(--code-bg);
-      padding: 0.125rem 0.375rem; border-radius: 3px; word-break: break-word;
-    }
-
     footer {
       max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
-      border-top: 1px solid var(--border); display: flex; justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;
       align-items: center; flex-wrap: wrap; gap: 1rem;
     }
-    footer p { color: var(--text-secondary); font-size: 0.8125rem; }
+    footer p { color: rgba(255, 255, 255, 0.5); font-size: 0.8125rem; }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { color: var(--text-secondary); font-size: 0.8125rem; text-decoration: none; }
+    .footer-links a { color: rgba(255, 255, 255, 0.45); font-size: 0.8125rem; text-decoration: none; }
     .footer-links a:hover { color: var(--text); }
 
     .feedback { font-size: 0.8125rem; margin-top: 2.5rem; }
     .feedback a { color: inherit; }
-
-    .cursor-term {
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
-      margin-top: 1.5rem;
-      font-family: var(--mono);
-      font-size: 0.8125rem;
-      line-height: 1.65;
-    }
-    .term-line { margin-bottom: 0.375rem; }
-    .term-line:last-child { margin-bottom: 0; }
-    .term-badge { color: var(--accent); margin-right: 0.25rem; }
-    .term-header { color: var(--text-secondary); font-weight: 500; }
-    .term-status { color: var(--accent); font-size: 0.75rem; }
-    .term-prompt { color: var(--text-secondary); }
-    .term-response { color: var(--accent); }
-    .term-body { color: var(--text); }
 
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1rem 0; }
@@ -146,13 +113,87 @@
       .hero { padding: 1.5rem 1rem 1rem; }
       .page { padding: 0 1rem 2rem; }
       .page section + section { margin-top: 2rem; }
-      pre { padding: 0.75rem 1rem; }
       footer { gap: 0.75rem; }
       .footer-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
       .footer-links a { display: inline-block; padding: 0.75rem 0; }
     }
 
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+    .mull-mock {
+      background: #0d1117;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      line-height: 1.6;
+    }
+    .mull-mock-header {
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      font-size: 0.875rem;
+    }
+    .mull-mock-line {
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+    .mull-mock-prompt {
+      color: var(--accent);
+    }
+    .mull-mock-output {
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 0.25rem;
+      padding-left: 1rem;
+    }
+    .upstream-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 0.125rem 0.5rem;
+      border-radius: 4px;
+    }
+    .mull-dashboard-mock {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin-top: 1.5rem;
+    }
+    .mull-dashboard-header {
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .mull-dashboard-row {
+      padding: 0.25rem 0;
+      margin-bottom: 0.25rem;
+    }
+    .mull-needs-input { color: #d4a84d; }
+    .mull-working { color: var(--text-secondary); }
+    .mull-idle { color: var(--text-secondary); opacity: 0.7; }
+    .mull-dashboard-footer {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    .mull-dashboard-shortcuts {
+      margin-top: 0.5rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      font-size: 0.7rem;
+    }
   </style>
 </head>
 <body>
@@ -161,7 +202,7 @@
     <ul class="nav-links" id="nav">
       <li><a href="./index.html">Home</a></li>
       <li><a href="./projects.html">Projects</a></li>
-      <li><a href="./cursor.html" class="active">Cursor</a></li>
+      <li><a href="./cursor.html">Cursor</a></li>
       <li><a href="./docs.html">Docs</a></li>
     </ul>
     <button type="button" class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">Menu</button>
@@ -169,51 +210,62 @@
 
   <div class="hero">
     <div class="hero-content">
-      <h1>Cursor</h1>
-      <p>Terminal-native autonomous coding agent.</p>
+      <h1>mull</h1>
+      <p>Terminal-based AI coding agent.</p>
     </div>
   </div>
 
   <div class="page">
     <section>
       <h2>About</h2>
-      <p>Cursor is a terminal-native AI coding agent. Work with codebases, files, repositories, and shell commands through a conversation-first interface.</p>
-      <p>Available on macOS, Windows, Linux, and CLI.</p>
+      <p>Mull is a terminal-based AI coding agent for working with codebases through conversation. It runs locally, understands your repository, and can read files, run commands, and apply edits for your review.</p>
+      <p><span class="upstream-badge">upstream</span></p>
     </section>
 
     <section>
-      <h2>Installation</h2>
-      <pre><code>npm i -g @bniladridas/cursor</code></pre>
-      <p>Or via Homebrew:</p>
-      <pre><code>brew tap palmshed/cursor
-brew install palmshed/cursor/cursor</code></pre>
-      <p>Or via script:</p>
-      <pre><code>curl -fsSL https://github.com/bniladridas/cursor/raw/main/install.sh | sudo sh</code></pre>
-    </section>
-
-    <section>
-      <h2>Usage</h2>
-      <p>Cursor runs in the terminal. Start a conversation with any prompt.</p>
-      <div class="cursor-term">
-        <div class="term-line term-header"><span class="term-badge">▌</span> CURSOR</div>
-        <div class="term-line term-status">offline · qwen2.5-coder:1.5b</div>
-        <div class="term-line term-prompt">&gt; explain this project</div>
-        <div class="term-line term-response">cursor</div>
-        <div class="term-line term-body">This project is a terminal-native AI coding agent. Work with codebases, files, repositories, and shell commands through a conversation-first interface.</div>
+      <h2>Preview</h2>
+      <div class="mull-mock">
+        <div class="mull-mock-header">mull</div>
+        <div class="mull-mock-line"><span class="mull-mock-prompt">$</span> mull login</div>
+        <div class="mull-mock-output">1) OpenRouter API key (recommended)</div>
+        <div class="mull-mock-output">2) GitHub device login</div>
+        <div class="mull-mock-output">Paste your key when prompted</div>
+        <div class="mull-mock-line"><span class="mull-mock-prompt">$</span> mull --model openrouter/auto</div>
+        <div class="mull-mock-output">Reading working tree...</div>
+        <div class="mull-mock-output">Ready. Type your request.</div>
+        <div class="mull-mock-line"><span class="mull-mock-prompt">></span> explain how auth works</div>
+        <div class="mull-mock-output">Analyzing auth.rs...</div>
+        <div class="mull-mock-output">Auth uses OpenRouter API keys stored</div>
+        <div class="mull-mock-output">in ~/.mull/auth.json. The key is sent</div>
+        <div class="mull-mock-output">only to OpenRouter, never to Mull.</div>
       </div>
+      <div class="mull-dashboard-mock">
+        <div class="mull-dashboard-header">mull · Dashboard — 3 agents</div>
+        <div class="mull-dashboard-row mull-needs-input">● reviewer · audit token flow    Awaiting your input            2m</div>
+        <div class="mull-dashboard-row mull-working">⋅ implementer · fix login bug    Running: cargo test           12m</div>
+        <div class="mull-dashboard-row mull-idle">○ refactor · feat/login          idle                           1h</div>
+        <div class="mull-dashboard-footer">❯ Dispatch a new agent</div>
+        <div class="mull-dashboard-shortcuts">↑/↓ select (peek) · Enter open · Ctrl+R rename · Ctrl+T pin</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Features</h2>
+      <ul>
+        <li>Local-first agent for editing, running, and reviewing code</li>
+        <li>OpenRouter integration - use any model including free ones</li>
+        <li>Interactive sessions and one-shot commands</li>
+        <li>File editing, shell commands, and code analysis</li>
+      </ul>
     </section>
 
     <section>
       <h2>Resources</h2>
       <ul>
-        <li><a href="https://github.com/palmshed/cursor">GitHub</a></li>
-        <li><a href="https://palmshed.github.io/cursor/">Site</a></li>
-        <li><a href="https://github.com/palmshed/cursor-docs">Documentation</a></li>
-        <li><a href="https://www.npmjs.com/package/@bniladridas/cursor">npm</a></li>
-        <li><a href="https://github.com/palmshed/homebrew-cursor">Homebrew</a></li>
-        <li><a href="https://github.com/bniladridas">Maintainer</a></li>
+        <li><a href="https://github.com/palmshed/mull">GitHub</a></li>
+        <li><a href="https://palmshed.github.io/mull/">Site</a></li>
       </ul>
-      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/cursor/issues">Report an issue</a>.</p>
+      <p class="feedback">Found something unexpected? <a href="https://github.com/palmshed/mull/issues">Report an issue</a>.</p>
     </section>
   </div>
 
