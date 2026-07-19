@@ -1,7 +1,7 @@
 import { db } from "./_lib/db.js";
 import { newResetToken, resetExpiry } from "./_lib/auth.js";
 import { verifyCaptcha } from "./_lib/captcha.js";
-import { json, preflight, readBody } from "./_lib/http.js";
+import { send, sendPreflight, readBody, adapt } from "./_lib/http.js";
 import { eq } from "drizzle-orm";
 import { users, passwordResets } from "./_lib/schema.js";
 
@@ -24,13 +24,14 @@ async function sendResetEmail(email, token) {
 }
 
 export default async function handler(req) {
+  req = await adapt(req);
   const origin = req.headers.get("origin") || "";
-  if (req.method === "OPTIONS") return preflight(origin);
-  if (req.method !== "POST") return json({ error: "Method not allowed" }, 405, origin);
+  if (req.method === "OPTIONS") return sendPreflight(res, origin);
+  if (req.method !== "POST") return send(res,{ error: "Method not allowed" }, 405, origin);
 
   const { username, captcha } = await readBody(req);
-  if (!username) return json({ error: "Missing fields" }, 400, origin);
-  if (!(await verifyCaptcha(captcha))) return json({ error: "Captcha failed" }, 400, origin);
+  if (!username) return send(res,{ error: "Missing fields" }, 400, origin);
+  if (!(await verifyCaptcha(captcha))) return send(res,{ error: "Captcha failed" }, 400, origin);
 
   const [user] = await db.select().from(users).where(eq(users.username, username)).limit(1);
   if (user && user.email) {
@@ -38,5 +39,5 @@ export default async function handler(req) {
     await db.insert(passwordResets).values({ token, user_id: user.id, expires_at: resetExpiry() });
     await sendResetEmail(user.email, token);
   }
-  return json({ ok: true }, 200, origin);
+  return send(res,{ ok: true }, 200, origin);
 }

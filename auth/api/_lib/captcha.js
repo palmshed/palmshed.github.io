@@ -2,12 +2,10 @@ const HCAPTCHA_URL = "https://api.hcaptcha.com/siteverify";
 const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
 export async function verifyCaptcha(token) {
+  if (process.env.CAPTCHA_DISABLED === "true") return true;
   if (!token) return false;
   const secret = process.env.CAPTCHA_SECRET;
-  if (!secret) {
-    if (process.env.CAPTCHA_DISABLED === "true") return true;
-    return false;
-  }
+  if (!secret) return false;
   const provider = (process.env.CAPTCHA_PROVIDER || "hcaptcha").toLowerCase();
   const url = provider === "turnstile" ? TURNSTILE_URL : HCAPTCHA_URL;
   try {
