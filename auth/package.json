@@ -1,0 +1,14 @@
+{
+  "name": "palmshed-auth",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "db": "psql \"$DATABASE_URL\" -f db/schema.sql"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.36.0",
+    "postgres": "^3.4.0",
+    "dotenv": "^16.4.0"
+  }
+}

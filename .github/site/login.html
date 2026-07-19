@@ -69,11 +69,15 @@
     <span class="nav-links"><a href="./index.html">Home</a></span>
   </nav>
   <main>
-    <h1>Sign in</h1>
-    <p class="sub">Access Palmshed services.</p>
+    <h1 id="title">Sign in</h1>
+    <p class="sub" id="sub">Access Palmshed services.</p>
     <div class="msg" id="msg"></div>
 
     <form id="form" method="post">
+      <div class="field" id="emailField" hidden>
+        <label for="email">Email (for password reset)</label>
+        <input type="text" id="email" name="email" autocomplete="email">
+      </div>
       <div class="field">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" autocomplete="username" required>
@@ -89,6 +93,7 @@
       <button type="submit" class="submit" id="submit">Sign in</button>
       <div class="row">
         <a href="#" id="forgot">Forgot password?</a>
+        <a href="#" id="toggle">Create account</a>
       </div>
     </form>
   </main>
@@ -99,20 +104,48 @@
     var msg = document.getElementById('msg');
     var submit = document.getElementById('submit');
     var forgot = document.getElementById('forgot');
+    var toggle = document.getElementById('toggle');
+    var title = document.getElementById('title');
+    var sub = document.getElementById('sub');
+    var emailField = document.getElementById('emailField');
     var resetBtn = document.getElementById('resetCaptcha');
     // Same base as defined in the head script above.
     var API = API_BASE;
+    var mode = 'login';
 
     function show(text, kind) { msg.textContent = text; msg.className = 'msg ' + (kind || ''); }
 
     function captchaToken() {
-      var el = document.querySelector('.h-captcha iframe');
-      // hCaptcha stores the token on the widget; read from the global if present.
       return (window.hcaptcha && window.hcaptcha.getResponse()) || '';
     }
 
     resetBtn.onclick = function () {
       if (window.hcaptcha) window.hcaptcha.reset();
+    };
+
+    function switchMode(to) {
+      mode = to;
+      if (mode === 'register') {
+        title.textContent = 'Create account';
+        sub.textContent = 'Register a new Palmshed account.';
+        submit.textContent = 'Create account';
+        forgot.style.display = 'none';
+        emailField.hidden = false;
+        toggle.textContent = 'Sign in';
+      } else {
+        title.textContent = 'Sign in';
+        sub.textContent = 'Access Palmshed services.';
+        submit.textContent = 'Sign in';
+        forgot.style.display = '';
+        emailField.hidden = true;
+        toggle.textContent = 'Create account';
+      }
+      show('', '');
+    }
+
+    toggle.onclick = function (e) {
+      e.preventDefault();
+      switchMode(mode === 'login' ? 'register' : 'login');
     };
 
     forgot.onclick = function (e) {
@@ -137,6 +170,22 @@
       var captcha = captchaToken();
       if (!username || !password) { show('Fill in all fields.', 'error'); return; }
       if (!captcha) { show('Complete the captcha.', 'error'); return; }
+      if (mode === 'register') {
+        var email = document.getElementById('email').value.trim();
+        submit.disabled = true; submit.textContent = 'Creating...';
+        fetch(API + '/register', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          mode: 'cors', credentials: 'include',
+          body: JSON.stringify({ username: username, password: password, email: email, captcha: captcha })
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            if (res.ok) { show('Account created. You can now sign in.', 'ok'); switchMode('login'); }
+            else { show(res.d.error || 'Registration failed.', 'error'); if (window.hcaptcha) window.hcaptcha.reset(); }
+          })
+          .catch(function () { show('Network error.', 'error'); })
+          .finally(function () { submit.disabled = false; submit.textContent = 'Create account'; });
+        return;
+      }
       submit.disabled = true; submit.textContent = 'Signing in...';
       fetch(API + '/login', {
         method: 'POST', headers: { 'content-type': 'application/json' },

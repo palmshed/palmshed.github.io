@@ -1,60 +1,57 @@
-# Authentication backend
+# Authentication
 
-The site is served from GitHub Pages (static, no server). Real username/password
-login, captcha verification, and password-reset email require a backend. That
-backend lives in a **separate Vercel project** (this repo stays static).
+The site is served from GitHub Pages (static). Real login needs a backend, which
+lives in the **`auth/` folder** of this repo and deploys to a separate Vercel
+project. The site calls it cross-origin.
 
-The login page is `.github/site/login.html`. It calls `API_BASE` (a Vercel URL)
-defined at the top of its scripts. Set that to your Vercel deployment.
+## Layout
 
-## Backend project (deploy separately to Vercel)
+- `auth/` — the Vercel backend project (self-contained)
+  - `package.json`, `vercel.json`
+  - `db/schema.sql` — Postgres schema (run once)
+  - `api/config.js` — public captcha config
+  - `api/register.js` — create account
+  - `api/login.js` — verify + set session cookie
+  - `api/forgot-password.js` — issue reset token + email
+  - `api/reset-password.js` — apply new password
+  - `api/_lib/*` — db, auth, captcha, http (CORS) helpers
+- `.github/site/login.html` — the UI; `API_BASE` points at the Vercel URL
 
-Files needed in the Vercel project root:
+## Deploy the backend (one time)
 
-- `package.json` — deps: `drizzle-orm`, `postgres`, `dotenv`
-- `vercel.json` — runtime nodejs20.x, functions `api/*.js`
-- `db/schema.sql` — run once against Vercel Postgres
-- `api/_lib/{db,auth,captcha,http,schema}.js`
-- `api/{config,login,forgot-password,reset-password}.js`
-
-### CORS (required — browser on github.io calls a different origin)
-
-Every function response must include:
-
-```
-Access-Control-Allow-Origin: https://palmshed.github.io
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: POST, OPTIONS
-```
-
-Handle `OPTIONS` preflight by returning 204 with the headers above.
-
-### Environment variables (Vercel project settings)
-
-```
-DATABASE_URL            # Vercel Postgres
-HCAPTCHA_SITE_KEY       # public, returned by /api/config
-CAPTCHA_SECRET          # server-side hCaptcha verify
-CAPTCHA_PROVIDER=hcaptcha
-RESEND_API_KEY          # transactional email
-RESEND_FROM=auth@palmshed.io
-PUBLIC_BASE_URL=https://palmshed.github.io   # used in reset links
-# RESEND_DISABLED=true   # log reset links instead of sending (dev)
-# CAPTCHA_DISABLED=true  # skip captcha verify (dev)
+```bash
+cd auth
+vercel link            # link or create a Vercel project (e.g. palmshed-auth)
+vercel env add DATABASE_URL         # paste Vercel Postgres URL
+vercel env add HCAPTCHA_SITE_KEY
+vercel env add CAPTCHA_SECRET
+vercel env add CAPTCHA_PROVIDER hcaptcha
+vercel env add RESEND_API_KEY
+vercel env add RESEND_FROM auth@palmshed.io
+vercel env add PUBLIC_BASE_URL https://palmshed.github.io
+vercel env add ALLOWED_ORIGIN https://palmshed.github.io
+vercel deploy --prod
 ```
 
-### Database
+Note the deployed URL (e.g. `https://palmshed-auth.vercel.app`) and set
+`API_BASE` at the top of `.github/site/login.html` to match.
 
-`db/schema.sql` creates `users`, `sessions`, `password_resets`.
-Run with: `psql "$DATABASE_URL" -f db/schema.sql`
+## Database
 
-### Endpoint summary
+```bash
+cd auth
+psql "$DATABASE_URL" -f db/schema.sql
+```
 
-- `GET  /api/config` — returns public `{ captchaSiteKey, captchaProvider }`
-- `POST /api/login` — `{ username, password, captcha }` → sets httpOnly session cookie
-- `POST /api/forgot-password` — `{ username, captcha }` → emails reset link
-- `POST /api/reset-password` — `{ token, password }` → updates password
+## CORS
 
-Passwords are hashed with scrypt + per-user salt. Sessions are httpOnly,
-SameSite=Lax cookies. Captcha is verified server-side; never trusted client-side.
+Every function returns `Access-Control-Allow-Origin: <ALLOWED_ORIGIN>` with
+`Access-Control-Allow-Credentials: true`, and answers `OPTIONS` preflight with
+204. Cookies are HttpOnly + SameSite=Lax.
+
+## Notes
+
+- Passwords: scrypt + per-user salt. No plaintext stored.
+- Captcha verified server-side only.
+- `RESEND_DISABLED=true` logs reset links instead of emailing (local/dev).
+- `CAPTCHA_DISABLED=true` skips captcha verification (local/dev).
