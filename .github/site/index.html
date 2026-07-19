@@ -256,7 +256,9 @@
     }
 
     .cap-preview {
-      display: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0s linear 0.25s;
       position: absolute;
       z-index: 50;
       top: 1.5rem;
@@ -271,7 +273,9 @@
     }
 
     .cap-grid li a:hover + .cap-preview {
-      display: block;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.25s ease 0.12s, visibility 0s linear 0.12s;
     }
 
     /* Preview: cursor terminal */
