@@ -34,5 +34,5 @@ Requires `GITHUB_TOKEN` and `requests`. Run daily via GitHub Actions (see `.gith
 ## Captcha
 
 The sign-in page uses [hCaptcha](https://www.hcaptcha.com) for bot protection.
-See hCaptcha's [privacy policy](https://privacypolicy.hcaptcha.com) and
+See hCaptcha's [privacy policy](https://www.hcaptcha.com/privacy) and
 [terms](https://hcaptcha.com/terms).
