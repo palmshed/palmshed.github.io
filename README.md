@@ -4,8 +4,8 @@ Organization homepage for Palmshed. Lists projects, applications, and repositori
 
 ## Structure
 
-- `.github/site/` — the site, a set of static HTML pages served from GitHub Pages.
-- `auth/` — the authentication backend (separate Vercel project). See `auth/README.md` and `AUTH.md`.
+- `.github/site/` ~ the site, a set of static HTML pages served from GitHub Pages.
+- `auth/` ~ the authentication backend (separate Vercel project). See `auth/README.md` and `AUTH.md`.
 
 ## Development
 

@@ -8,10 +8,10 @@ details are in the root [`AUTH.md`](../AUTH.md).
 
 ## Layout
 
-- `api/` — Vercel functions: `config`, `register`, `login`, `forgot-password`, `reset-password`
-- `api/_lib/` — `db`, `auth`, `captcha`, `http` helpers
-- `db/schema.sql` — Postgres schema
-- `vercel.json` — runtime/region config
+- `api/` ~ Vercel functions: `config`, `register`, `login`, `forgot-password`, `reset-password`
+- `api/_lib/` ~ `db`, `auth`, `captcha`, `http` helpers
+- `db/schema.sql` ~ Postgres schema
+- `vercel.json` ~ runtime/region config
 
 ## Local
 

@@ -6,16 +6,16 @@ project. The site calls it cross-origin.
 
 ## Layout
 
-- `auth/` — the Vercel backend project (self-contained)
+- `auth/` ~ the Vercel backend project (self-contained)
   - `package.json`, `vercel.json`
-  - `db/schema.sql` — Postgres schema (run once)
-  - `api/config.js` — public captcha config
-  - `api/register.js` — create account
-  - `api/login.js` — verify + set session cookie
-  - `api/forgot-password.js` — issue reset token + email
-  - `api/reset-password.js` — apply new password
-  - `api/_lib/*` — db, auth, captcha, http (CORS) helpers
-- `.github/site/login.html` — the UI; `API_BASE` points at the Vercel URL
+  - `db/schema.sql` ~ Postgres schema (run once)
+  - `api/config.js` ~ public captcha config
+  - `api/register.js` ~ create account
+  - `api/login.js` ~ verify + set session cookie
+  - `api/forgot-password.js` ~ issue reset token + email
+  - `api/reset-password.js` ~ apply new password
+  - `api/_lib/*` ~ db, auth, captcha, http (CORS) helpers
+- `.github/site/login.html` ~ the UI; `API_BASE` points at the Vercel URL
 
 ## Deploy the backend (one time)
 

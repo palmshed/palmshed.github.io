@@ -8,9 +8,9 @@ punctuation and promotional language, and let the content speak for itself.
 
 ## Layout
 
-- `.github/site/` — the static site. Each page is a standalone HTML file with
+- `.github/site/` ~ the static site. Each page is a standalone HTML file with
   its own `<style>` block. There is no framework or build step.
-- `auth/` — the authentication backend (separate Vercel project). See
+- `auth/` ~ the authentication backend (separate Vercel project). See
   `auth/README.md` and `AUTH.md`.
 
 Pages are edited by hand. The site is served from GitHub Pages; pushing to
@@ -20,16 +20,16 @@ Pages are edited by hand. The site is served from GitHub Pages; pushing to
 
 Projects are listed on two pages:
 
-- `projects.html` — the **Overview** carousel and the **All repositories** grid.
-- `index.html` — the homepage **Capabilities** section (hover previews).
+- `projects.html` ~ the **Overview** carousel and the **All repositories** grid.
+- `index.html` ~ the homepage **Capabilities** section (hover previews).
 
 To add a project to the Overview carousel in `projects.html`, copy an existing
 `<div class="slide">` block inside `#track` and set:
 
-- `slide-name` — the project name
-- `slide-tag` (optional) — a quiet qualifier such as `upstream`
-- `slide-desc` — one short sentence
-- `slide-mock` — a small terminal mock (`.mock` with `.mock-head`,
+- `slide-name` ~ the project name
+- `slide-tag` (optional) ~ a quiet qualifier such as `upstream`
+- `slide-desc` ~ one short sentence
+- `slide-mock` ~ a small terminal mock (`.mock` with `.mock-head`,
   `.mock-muted`, `.mock-accent`, etc.)
 
 Keep mocks quiet: use the site palette, not bright syntax colors. One project
