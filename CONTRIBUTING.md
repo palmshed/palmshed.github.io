@@ -2,30 +2,48 @@
 
 ## Design principles
 
-This site follows an understated, institutional tone. See AGENTS.md for full guidelines. The short version: prefer short sentences, avoid decorative punctuation and promotional language, and let the content speak for itself.
+This site follows an understated, institutional tone. See AGENTS.md for full
+guidelines. The short version: prefer short sentences, avoid decorative
+punctuation and promotional language, and let the content speak for itself.
 
-## Section guide
+## Layout
 
-| Section | Maintained | How to add a project |
-|---|---|---|
-| What We Build | Hand-edited | Add an `<li>` under the relevant domain column |
-| Technologies | Hand-edited | Add to the appropriate `<p>` tag |
-| Featured Projects | Hand-edited | Add a new `.featured-card` block + add entry to `data/projects.json` |
-| What You'll Build | Hand-edited | Add an `<li>` to the list |
-| Repository Archive | Generated | Nothing to edit — runs daily via GitHub Actions |
+- `.github/site/` — the static site. Each page is a standalone HTML file with
+  its own `<style>` block. There is no framework or build step.
+- `auth/` — the authentication backend (separate Vercel project). See
+  `auth/README.md` and `AUTH.md`.
 
-## Adding a project to Featured Projects
+Pages are edited by hand. The site is served from GitHub Pages; pushing to
+`main` deploys it (see `.github/workflows/deploy-site.yml`).
 
-1. Add a `.featured-card` block in `index.html` inside the `.featured-grid` div. Each card shows: name, description, platform badges, action links, and metadata.
-2. Add an entry to `data/projects.json` if the project needs custom metadata (maintainer, stage, featured flag). The GitHub API fills in everything else.
+## Adding a project
 
-## Running the sync script locally
+Projects are listed on two pages:
 
-```sh
-export GITHUB_TOKEN=your_token
-export ORG_NAME=palmshed
-pip install requests
-python scripts/sync_index.py
-```
+- `projects.html` — the **Overview** carousel and the **All repositories** grid.
+- `index.html` — the homepage **Capabilities** section (hover previews).
 
-The script updates only the repo list between `<!-- repo-list-start -->` and `<!-- repo-list-end -->` in `index.html`.
+To add a project to the Overview carousel in `projects.html`, copy an existing
+`<div class="slide">` block inside `#track` and set:
+
+- `slide-name` — the project name
+- `slide-tag` (optional) — a quiet qualifier such as `upstream`
+- `slide-desc` — one short sentence
+- `slide-mock` — a small terminal mock (`.mock` with `.mock-head`,
+  `.mock-muted`, `.mock-accent`, etc.)
+
+Keep mocks quiet: use the site palette, not bright syntax colors. One project
+per slide; the dots below the carousel update automatically from the slide count.
+
+To add the same project to the **All repositories** grid, add a `<a class="card">`
+block following the existing pattern (name, description, optional tag).
+
+## Homepage capabilities
+
+The `index.html` Capabilities list shows a preview on hover. Each item pairs a
+list entry with a `.cap-preview` block. Add both together so the hover works.
+
+## Authentication backend
+
+Changes to `auth/` are deployed separately to Vercel. See `auth/README.md` for
+local dev and deploy steps. Do not commit secrets; set them as Vercel env vars.
